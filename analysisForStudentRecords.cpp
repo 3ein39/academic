@@ -66,6 +66,27 @@ bool view_all_students() {
     return true;
 }
 
+int findById(){ // returns the position of the student in students array
+       while (true) {
+        cout << "Enter student's id..\n";
+        int id;
+        cin >> id;
+        for (int i = 1; i <= 20; i++) {
+            if (students[i].id == id) {
+                return i;
+            }
+        }
+        cout << "No such student with id .. please try again..\n";
+    }
+}
+
+bool calc_average(){
+    int studentPosition = findById();
+    cout << "Student id: " << students[studentPosition].id
+        << " Average: "<< students[studentPosition].total_score << '%' <<endl;
+    return true;
+}
+
 /*
  * struct for 20 student
  * id, name, sex, mid-term score, final score, total score
@@ -88,6 +109,8 @@ void system() {
             add_student();
         else if (choice == 2)
             view_all_students();
+        else if (choice == 3)
+            calc_average();
         else
             break;
     }
@@ -97,4 +120,12 @@ int main() {
     system();
     return 0;
 }
+
+
+/*
+ * DRAFT
+ * 3. calc. average of selected student's scores
+ * find student by id then get the total score and add % infront of it
+ * if no such student with this id return false
+ */
 
