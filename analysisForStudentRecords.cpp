@@ -125,6 +125,15 @@ int get_min_student(){ // gets the student with minimum total score in the array
     print_student(idx);
     return true;
 }
+
+bool cmp(Student a, Student b){
+    return a.total_score > b.total_score;
+}
+
+void sort_students() {
+    sort(students, students + MAX_STUDENTS + 1, cmp);
+    view_all_students();
+}
 /*
  * struct for 20 student
  * id, name, sex, mid-term score, final score, total score
@@ -155,6 +164,8 @@ void system() {
             get_min_student();
         else if (choice == 6)
             print_student();
+        else if (choice == 7)
+            sort_students();
         else
             break;
     }
@@ -168,10 +179,7 @@ int main() {
 
 /*
  * DRAFT
- * loop in students array and check for the max total score
- * first if id != to zero
- *      let max = 0;
- *      if student[i] > max
- *      idx = i
+ * sorting the array
+ * by total score from max to min
  */
 
