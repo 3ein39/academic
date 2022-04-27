@@ -93,7 +93,7 @@ bool calc_average(){
     return true;
 }
 
-int get_max_student(){ // gets the student with maximum total score in the array returns its position
+int get_max_student(){ // gets the student with maximum total score in the array 
     int max = 0;
     int idx;
     for(int i = 1; i <= 20; i++){
@@ -109,6 +109,21 @@ int get_max_student(){ // gets the student with maximum total score in the array
     return true;
 }
 
+int get_min_student(){ // gets the student with minimum total score in the array
+    int min = 101;
+    int idx;
+    for(int i = 1; i <= 20; i++){
+        if(students[i].id != 0){
+            if (students[i].total_score < min){
+                idx = i;
+                min = students[i].total_score;
+            }
+        }
+    }
+    cout << "The data for student with min total score is: \n";
+    print_student(idx);
+    return true;
+}
 /*
  * struct for 20 student
  * id, name, sex, mid-term score, final score, total score
@@ -135,6 +150,8 @@ void system() {
             calc_average();
         else if (choice == 4)
             get_max_student();
+        else if (choice == 5)
+            get_min_student();
         else
             break;
     }
