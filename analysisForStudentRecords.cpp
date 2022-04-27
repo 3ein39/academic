@@ -7,7 +7,7 @@ struct Student {
     char sex {};
     int midTerm_score {}; // from 0 to 20
     int final_score {};   // from 0 to 80
-    int total_score = midTerm_score + final_score;   // 100 max
+    int total_score {};   // 100 max
 
 };
 
@@ -36,7 +36,7 @@ int menu() {
     return choice;
 }
 
-void add_student(){
+bool add_student(){
     cout << "Enter the following respectively..\n"
          << "id, name, sex, mid-term score, final score.\n";
     int _id, _midTerm_score, _final_score;
@@ -49,6 +49,21 @@ void add_student(){
     }
     students[i].id = _id, students[i].name = _name, students[i].sex = _sex, students[i].midTerm_score = _midTerm_score;
     students[i].final_score = _final_score;
+    students[i].total_score = _midTerm_score + _final_score;
+    return true;
+}
+
+bool view_all_students() {
+    cout << "************************\n";
+    cout << "data is represented as id, name, sex, mid-term score, final score, total score\n";
+    for (auto student: students){
+        if (student.id != 0){
+            cout << student.id << " "<< student.name<< " " <<student.sex
+                <<" "<< student.midTerm_score << " "<< student.final_score
+                << " " << student.total_score << endl;
+        }
+    }
+    return true;
 }
 
 /*
@@ -71,6 +86,8 @@ void system() {
 
         if (choice == 1)
             add_student();
+        else if (choice == 2)
+            view_all_students();
         else
             break;
     }
