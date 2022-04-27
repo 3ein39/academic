@@ -15,7 +15,14 @@ struct Time {
 };
 
 int main() {
+  int hrs, mins, seconds;
+  cout << "Enter first time in 12:59:59 format..\n";
+  cin >> hrs >> mins >> seconds;
+  Time firstTime(hrs, mins, seconds);
   
+  cout << "Enter second time in 12:59:59 format..\n";
+  cin >> hrs >> mins >> seconds;
+  Time secondTime(hrs, mins, seconds);
     return 0;
 }
 
