@@ -14,7 +14,7 @@ struct Student {
 const int MAX_STUDENTS = 20;
 Student students[MAX_STUDENTS + 1]; // [1 to 20] student;
 
-int menu() {
+int menu() { // exits if choice is not in range [1 - 7]
     int choice = -1;
     while (choice == -1) {
         cout << "1. Add student records\n";
@@ -79,7 +79,7 @@ int findById(){ // returns the position of the student in students array
     }
 }
 
-void print_student(int pos = findById()){
+void print_student(int pos = findById()){ // if called with no parameters it will find id first by default
     cout << "data is represented as id, name, sex, mid-term score, final score, total score\n";
     cout << students[pos].id << " "<< students[pos].name<< " " <<students[pos].sex
          <<" "<< students[pos].midTerm_score << " "<< students[pos].final_score
@@ -126,7 +126,7 @@ int get_min_student(){ // gets the student with minimum total score in the array
     return true;
 }
 
-bool cmp(Student a, Student b){
+bool cmp(Student a, Student b){ // sorts the array from max to min w.r.t total score
     return a.total_score > b.total_score;
 }
 
@@ -134,19 +134,6 @@ void sort_students() {
     sort(students, students + MAX_STUDENTS + 1, cmp);
     view_all_students();
 }
-/*
- * struct for 20 student
- * id, name, sex, mid-term score, final score, total score
- * FUNCTIONS
- * 1. add student
- * 2. view all students
- * 3. calc. average of selected student scores
- * 4. show student who gets the max total score
- * 5 show studebt who get the min total score
- * 6. find student by id
- * 7. sort records by total score
- *
- */
 
 void system() {
     while (true) {
@@ -176,10 +163,4 @@ int main() {
     return 0;
 }
 
-
-/*
- * DRAFT
- * sorting the array
- * by total score from max to min
- */
 
