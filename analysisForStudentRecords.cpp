@@ -65,6 +65,12 @@ bool view_all_students() {
     }
     return true;
 }
+void print_student(int pos){
+    cout << "data is represented as id, name, sex, mid-term score, final score, total score\n";
+    cout << students[pos].id << " "<< students[pos].name<< " " <<students[pos].sex
+         <<" "<< students[pos].midTerm_score << " "<< students[pos].final_score
+         << " " << students[pos].total_score << endl;
+}
 
 int findById(){ // returns the position of the student in students array
        while (true) {
@@ -84,6 +90,22 @@ bool calc_average(){
     int studentPosition = findById();
     cout << "Student id: " << students[studentPosition].id
         << " Average: "<< students[studentPosition].total_score << '%' <<endl;
+    return true;
+}
+
+int get_max_student(){ // gets the student with maximum total score in the array returns its position
+    int max = 0;
+    int idx;
+    for(int i = 1; i <= 20; i++){
+        if(students[i].id != 0){
+            if (students[i].total_score > max){
+                idx = i;
+                max = students[i].total_score;
+            }
+        }
+    }
+    cout << "The data for student with max total score is: \n";
+    print_student(idx);
     return true;
 }
 
@@ -111,6 +133,8 @@ void system() {
             view_all_students();
         else if (choice == 3)
             calc_average();
+        else if (choice == 4)
+            get_max_student();
         else
             break;
     }
@@ -124,8 +148,10 @@ int main() {
 
 /*
  * DRAFT
- * 3. calc. average of selected student's scores
- * find student by id then get the total score and add % infront of it
- * if no such student with this id return false
+ * loop in students array and check for the max total score
+ * first if id != to zero
+ *      let max = 0;
+ *      if student[i] > max
+ *      idx = i
  */
 
