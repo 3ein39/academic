@@ -65,15 +65,8 @@ bool view_all_students() {
     }
     return true;
 }
-void print_student(int pos){
-    cout << "data is represented as id, name, sex, mid-term score, final score, total score\n";
-    cout << students[pos].id << " "<< students[pos].name<< " " <<students[pos].sex
-         <<" "<< students[pos].midTerm_score << " "<< students[pos].final_score
-         << " " << students[pos].total_score << endl;
-}
-
 int findById(){ // returns the position of the student in students array
-       while (true) {
+    while (true) {
         cout << "Enter student's id..\n";
         int id;
         cin >> id;
@@ -86,6 +79,14 @@ int findById(){ // returns the position of the student in students array
     }
 }
 
+void print_student(int pos = findById()){
+    cout << "data is represented as id, name, sex, mid-term score, final score, total score\n";
+    cout << students[pos].id << " "<< students[pos].name<< " " <<students[pos].sex
+         <<" "<< students[pos].midTerm_score << " "<< students[pos].final_score
+         << " " << students[pos].total_score << endl;
+}
+
+
 bool calc_average(){
     int studentPosition = findById();
     cout << "Student id: " << students[studentPosition].id
@@ -93,7 +94,7 @@ bool calc_average(){
     return true;
 }
 
-int get_max_student(){ // gets the student with maximum total score in the array 
+int get_max_student(){ // gets the student with maximum total score in the array
     int max = 0;
     int idx;
     for(int i = 1; i <= 20; i++){
@@ -152,6 +153,8 @@ void system() {
             get_max_student();
         else if (choice == 5)
             get_min_student();
+        else if (choice == 6)
+            print_student();
         else
             break;
     }
