@@ -7,7 +7,7 @@ struct Student {
     char sex {};
     int midTerm_score {}; // from 0 to 20
     int final_score {};   // from 0 to 80
-    int total_score {};   // 100 max
+    int total_score = midTerm_score + final_score;   // 100 max
 
 };
 
@@ -36,6 +36,21 @@ int menu() {
     return choice;
 }
 
+void add_student(){
+    cout << "Enter the following respectively..\n"
+         << "id, name, sex, mid-term score, final score.\n";
+    int _id, _midTerm_score, _final_score;
+    string _name;
+    char _sex;
+    cin >> _id >> _name >> _sex >> _midTerm_score >> _final_score;
+    int i {1}; // gets the position of the next free place in students array where id is set to zero
+    while (students[i].id != 0){
+        i++;
+    }
+    students[i].id = _id, students[i].name = _name, students[i].sex = _sex, students[i].midTerm_score = _midTerm_score;
+    students[i].final_score = _final_score;
+}
+
 /*
  * struct for 20 student
  * id, name, sex, mid-term score, final score, total score
@@ -54,10 +69,10 @@ void system() {
     while (true) {
         int choice = menu();
 
-        /*if (choice == 1)
+        if (choice == 1)
             add_student();
         else
-            break;*/
+            break;
     }
 }
 
