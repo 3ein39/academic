@@ -9,12 +9,32 @@ struct Student {
     int final_score {};   // from 0 to 80
     int total_score {};   // 100 max
 
-    Student(int _id, string _name, char _sex, int _midTerm_score, int _final_score){
-        id = _id, name = _name, sex = _sex, midTerm_score = _midTerm_score, final_score = _final_score;
-        total_score = midTerm_score + final_score;
-    }
 };
 
+const int MAX_STUDENTS = 20;
+Student students[MAX_STUDENTS + 1]; // [1 to 20] student;
+
+int menu() {
+    int choice = -1;
+    while (choice == -1) {
+        cout << "1. Add student records\n";
+        cout << "2. View all student records\n";
+        cout << "3. Calculate an average of a selected student's scores\n";
+        cout << "4. Show student who gets the max total score\n";
+        cout << "5. Show student who gets the min total score\n";
+        cout << "6. Find student by id\n";
+        cout << "7. Sort records by total scores\n";
+
+
+        cin >> choice;
+
+        if (!(1 <= choice && choice <= 7)) {
+            cout << "Invalid choice. Try again\n";
+            choice = -1;	// loop keep working
+        }
+    }
+    return choice;
+}
 
 /*
  * struct for 20 student
@@ -30,8 +50,19 @@ struct Student {
  *
  */
 
-int main() {
+void system() {
+    while (true) {
+        int choice = menu();
 
+        /*if (choice == 1)
+            add_student();
+        else
+            break;*/
+    }
+}
+
+int main() {
+    system();
     return 0;
 }
 
