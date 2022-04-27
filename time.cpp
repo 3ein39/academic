@@ -12,6 +12,9 @@ struct Time {
         hours = _hrs, minutes = _mins, seconds = _seconds;
         secondsSum = _seconds + _mins * 60 + _hrs * 60 * 60;
     }
+    void showSecondsSum() {
+        cout << "sum here = " << secondsSum << endl;
+    }
 };
 
 int main() {
@@ -19,10 +22,17 @@ int main() {
   cout << "Enter first time in 12:59:59 format..\n";
   cin >> hrs >> mins >> seconds;
   Time firstTime(hrs, mins, seconds);
-  
+
   cout << "Enter second time in 12:59:59 format..\n";
   cin >> hrs >> mins >> seconds;
   Time secondTime(hrs, mins, seconds);
+
+
+  cout << "First time "; firstTime.showSecondsSum();
+  cout << "Second time "; secondTime.showSecondsSum();
+  cout << "Total seconds sum = " << firstTime.secondsSum + secondTime.secondsSum << endl;
+
+
     return 0;
 }
 
