@@ -16,9 +16,9 @@ int main() {
     for (int i = 1; i <= n; i++) {
         cout << i << " : " << "grade: ";
         cin >> grade;
-        if (grade >= 95) {
+        if (grade >= 90) {
             gpa = 4;
-        } else if (grade >= 85 && grade < 95) {
+        } else if (grade >= 85 && grade < 90) {
             gpa = 3.6;
         } else if (grade >= 80 && grade < 85) {
             gpa = 3.3;
