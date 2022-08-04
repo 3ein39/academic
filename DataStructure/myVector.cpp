@@ -106,18 +106,6 @@ public:
         }
     }
 
-    /*
-     * deleting a position
-     * 4 0 1 2 3
-     * 0 1 2 3 4
-     * pop(2)
-     * 4 0 2 3
-     * 0 1 2 3
-     * cp = arr[pos]
-     * shift left from pos to last - 1
-     * size--
-     * return cp;
-     */
     int pop(int pos) {
         int cp = arr[pos];
         // shifting left
@@ -127,6 +115,18 @@ public:
         return cp;
     }
 
+    /*
+     * find and swap at each find
+     */
+    int findTransposition(int val) {
+        int ans = -1;
+
+        for (int i = 1; i < size; i++)
+            if (val == arr[i])
+                swap(arr[i], arr[i - 1]), ans = val;
+        
+        return ans;
+    }
 
     void expandCapacity() {
         capacity *= 2;
