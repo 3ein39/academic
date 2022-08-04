@@ -106,6 +106,28 @@ public:
         }
     }
 
+    /*
+     * deleting a position
+     * 4 0 1 2 3
+     * 0 1 2 3 4
+     * pop(2)
+     * 4 0 2 3
+     * 0 1 2 3
+     * cp = arr[pos]
+     * shift left from pos to last - 1
+     * size--
+     * return cp;
+     */
+    int pop(int pos) {
+        int cp = arr[pos];
+        // shifting left
+        for(int i = pos; i < size - 1; i++)
+            arr[i] = arr[i + 1];
+        size--;
+        return cp;
+    }
+
+
     void expandCapacity() {
         capacity *= 2;
         cout << "Expanding capacity to " << capacity << endl;
@@ -140,8 +162,8 @@ int main() {
 
     v.print(); // 0 1 2 3 4
 
-    v.rightRotate(4);
-    v.print(); // 1 2 3 4 0
+    cout << v.pop(2) << "\n"; // 2
+    v.print(); // 0 1 3 4
 
     return 0;
 }
