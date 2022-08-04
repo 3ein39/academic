@@ -87,6 +87,25 @@ public:
         arr[0] = last;
     }
 
+    /*
+     * right rotation with steps
+     * 1 2 3
+     * 3 1 2
+     * 2 3 1
+     * 1 2 3
+     */
+    void rightRotate(int times) {
+        if (times % size + 1 == 0) times = 1;
+        while (times--) {
+            int last = arr[size - 1]; // storing last element
+            // shifting right
+            for (int i = size - 1; i > 0; i--)
+                arr[i] = arr[i - 1];
+            // adding last as first
+            arr[0] = last;
+        }
+    }
+
     void expandCapacity() {
         capacity *= 2;
         cout << "Expanding capacity to " << capacity << endl;
@@ -102,14 +121,6 @@ public:
         new_arr = nullptr;
     }
 
-    /*
-     * left rotation
-     * 0 1 2 3 4 => 1 2 3 4 0
-     * save first
-     * loop from 0 to size - 2
-     * shift left arr[i] = arr[i+1]
-     * arr[size-1] = first;
-     */
     void leftRotate() {
         int first = arr[0];
         // shifting left
@@ -129,7 +140,7 @@ int main() {
 
     v.print(); // 0 1 2 3 4
 
-    v.leftRotate();
+    v.rightRotate(4);
     v.print(); // 1 2 3 4 0
 
     return 0;
