@@ -8,13 +8,16 @@ class myVector {
 private:
     int* arr = nullptr;
     int size;
+    int capacity {};
 public:
     // constructor
     myVector(int size) : size(size) {
         // exception handling
         if (size < 0) size = 1;
 
-        arr = new int[size] {};
+        capacity = size + 10;
+
+        arr = new int[capacity] {};
     }
 
     // destructor
@@ -59,31 +62,38 @@ public:
     // appending to the end of the array
     // arr.push_back(val) => void
     void push_back(int val) {
-        // create new array of bigger size
-        int* new_arr = new int[size + 1];
-        // copy old data
-        for (int i = 0; i < size; i++)
+        // expanding if size matches capacity
+        if (size == capacity)
+            expandCapacity();
+        arr[size++] = val;
+    }
+
+    void expandCapacity() {
+        capacity *= 2;
+        cout << "Expanding capacity to " << capacity << endl;
+        // creating new array
+        int* new_arr = new int[capacity];
+        // copying old data
+        for(int i = 0; i < size; i++)
             new_arr[i] = arr[i];
-        // add new el and increase the size
-        new_arr[size++] = val;
-        // change the pointers
-        swap(new_arr,arr);
-        // remove the useless data
+        // swapping the two pointers
+        swap(arr, new_arr);
+        // deleting the pointer
         delete[] new_arr;
+        new_arr = nullptr;
     }
 };
 
 int main() {
-    int n = 4;
+    int n = 5;
     myVector v(n);
 
     for (int i = 0; i < n; ++i)
         v.set(i,i);
 
-    v.push_back(15);
-    v.push_back(17);
-    v.push_back(19);
-    v.print(); // 0 1 2 3 15 17 19
-    
+    for(int i = 0; i < n*2+1; i++)
+        v.push_back(i+n);
+
+    v.print();
 }
 
