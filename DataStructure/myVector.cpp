@@ -78,13 +78,6 @@ public:
         arr[pos] = val;
     }
 
-    /*
-     * rightRotate
-     * 0 1 2 3 4 => 4 0 1 2 3
-     * take last el
-     * loop from end to 1 to shift right
-     * arr[0] = el
-     */
     void rightRotate() {
         int last = arr[size - 1]; // storing last element
         // shifting right
@@ -108,6 +101,23 @@ public:
         delete[] new_arr;
         new_arr = nullptr;
     }
+
+    /*
+     * left rotation
+     * 0 1 2 3 4 => 1 2 3 4 0
+     * save first
+     * loop from 0 to size - 2
+     * shift left arr[i] = arr[i+1]
+     * arr[size-1] = first;
+     */
+    void leftRotate() {
+        int first = arr[0];
+        // shifting left
+        for (int i = 0; i < size - 1; ++i)
+            arr[i] = arr[i+1];
+        // adding first as last
+        arr[size - 1] = first;
+    }
 };
 
 int main() {
@@ -119,7 +129,9 @@ int main() {
 
     v.print(); // 0 1 2 3 4
 
-    v.rightRotate();
-    v.print(); // 4 0 1 2 3
+    v.leftRotate();
+    v.print(); // 1 2 3 4 0
+
+    return 0;
 }
 
