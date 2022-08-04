@@ -68,6 +68,16 @@ public:
         arr[size++] = val;
     }
 
+    // arr.insert(pos, val)
+    void insert(int pos, int val) {
+        if (size++ == capacity) expandCapacity();
+        // shifting elements to the right
+        for (int i = size; i > pos; i--)
+            arr[i] = arr[i-1];
+        // inserting val at pos
+        arr[pos] = val;
+    }
+
     void expandCapacity() {
         capacity *= 2;
         cout << "Expanding capacity to " << capacity << endl;
@@ -91,8 +101,7 @@ int main() {
     for (int i = 0; i < n; ++i)
         v.set(i,i);
 
-    for(int i = 0; i < n*2+1; i++)
-        v.push_back(i+n);
+    v.insert(3,30);
 
     v.print();
 }
