@@ -78,6 +78,22 @@ public:
         arr[pos] = val;
     }
 
+    /*
+     * rightRotate
+     * 0 1 2 3 4 => 4 0 1 2 3
+     * take last el
+     * loop from end to 1 to shift right
+     * arr[0] = el
+     */
+    void rightRotate() {
+        int last = arr[size - 1]; // storing last element
+        // shifting right
+        for (int i = size - 1; i > 0; i--)
+            arr[i] = arr[i - 1];
+        // adding last as first
+        arr[0] = last;
+    }
+
     void expandCapacity() {
         capacity *= 2;
         cout << "Expanding capacity to " << capacity << endl;
@@ -101,8 +117,9 @@ int main() {
     for (int i = 0; i < n; ++i)
         v.set(i,i);
 
-    v.insert(3,30);
+    v.print(); // 0 1 2 3 4
 
-    v.print();
+    v.rightRotate();
+    v.print(); // 4 0 1 2 3
 }
 
