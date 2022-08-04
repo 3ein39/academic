@@ -121,10 +121,12 @@ public:
     int findTransposition(int val) {
         int ans = -1;
 
-        for (int i = 1; i < size; i++)
-            if (val == arr[i])
-                swap(arr[i], arr[i - 1]), ans = val;
-        
+        for (int i = 0; i < size; i++)
+            if (val == arr[i]) {
+                if (i == 0) return 0; // special case
+                swap(arr[i], arr[i - 1]), ans = i - 1;
+            }
+
         return ans;
     }
 
