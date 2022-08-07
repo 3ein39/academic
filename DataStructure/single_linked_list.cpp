@@ -2,10 +2,40 @@
 using namespace std;
 
 struct Node {
-    int data;
-    Node* next; // pointer to same object
+    int data {};
+    Node* next {}; // pointer to same object
 
     Node(int data) : data(data) {}
+};
+
+class LinkedList {
+private:
+    Node* head {};
+    Node* tail {};
+    int length {};
+public:
+    // operations on them
+    void print() {
+        Node* temp_head = head;
+
+        while (temp_head != nullptr) {
+            cout << temp_head->data << " ";
+            temp_head = temp_head->next;
+        }
+        cout << "\n";
+    }
+
+    void insertEnd(int val) {
+        Node* item = new Node(val);
+
+        if (!head)
+            head = tail = item;
+        else {
+            tail-> next = item;
+            tail = item;
+        }
+        length++;
+    }
 };
 
 int main() {
@@ -20,10 +50,6 @@ int main() {
     node3->next = node4;
     node4->next = nullptr;
 
-    cout << node4->data << "\n";
-    cout << node3->next->data << "\n";
-    cout << node2->next->next->data << "\n";
-    cout << node1->next->next->next->data << "\n";
 
     return 0;
 }
