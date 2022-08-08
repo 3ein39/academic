@@ -70,6 +70,18 @@ public:
         length++;
     }
 
+    void insertFront(int val) {
+        Node* item = new Node(val);
+
+        if (!head)
+            head = tail = item;
+        else {
+            item->next = head;
+            head = item;
+        }
+        length++;
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -104,7 +116,6 @@ public:
         }
         return oss.str();
     }
-
 
     void debug_add_node(Node* node){
         // vector<Nodes*> will allow us to print the list content
@@ -166,9 +177,18 @@ public:
 int main() {
 
     LinkedList list;
-    list.insertEnd(1);
-    list.insertEnd(2);
-    list.insertEnd(3);
+    list.insertEnd(6);
+    list.insertEnd(10);
+    list.insertEnd(8);
+    list.insertEnd(15);
+
+    list.insertFront(7);
+    list.insertFront(5);
+    list.insertFront(1);
+
+    list.print(); // 1 5 7 6 10 8 15
+
+
 
     return 0;
 }
