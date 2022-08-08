@@ -76,13 +76,14 @@ public:
         if (length == 0)
             assert(head == nullptr && tail == nullptr);
 
-        if (length)
+        if (length) {
             assert(head != nullptr && tail != nullptr);
+            assert(!tail->next);
+        }
 
         if (length == 1)
             assert(head == tail);
 
-        assert(!tail->next);
 
         int cur_length = 0;
         for (Node* cur = head; cur; cur = cur->next, cur_length++)
@@ -149,10 +150,25 @@ public:
             debug_print_node(debug_data[i]);
         cout << "****************\n" << flush;
     }
+
+    ~LinkedList() {
+        while(head) {
+            Node* current = head-> next;
+            delete head;
+            head = current;
+            length--;
+        }
+        tail = nullptr;
+        debug_verify_data_integrity();
+    }
 };
 
 int main() {
 
+    LinkedList list;
+    list.insertEnd(1);
+    list.insertEnd(2);
+    list.insertEnd(3);
 
     return 0;
 }
