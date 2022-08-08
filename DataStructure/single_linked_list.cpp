@@ -25,7 +25,7 @@ public:
     // preventing copy && assignment constructors
     LinkedList(const LinkedList&) = delete;
     LinkedList& operator=(const LinkedList& another) = delete;
-    // operations on them
+
     void print() {
         // convenient way of printing
         for (Node* cur = head; cur; cur = cur->next)
@@ -33,17 +33,17 @@ public:
         cout << "\n";
     }
 
-    // getting nth node 1-based
     Node* get_nth(int n) {
+        // getting nth node 1-based
         int cnt {0};
         for (Node* cur = head; cur; cur = cur->next)
             if (++cnt == n) return cur;
         return nullptr;
     }
 
-    // search for a value 0-based
-    // try to improve it by shifting the searched val one step to the left
     int search(int val) {
+        // search for a value 0-based
+        // try to improve it by shifting the searched val one step to the left
         int idx = 0;
         Node* previous = nullptr;
         for(Node* cur = head; cur; cur = cur->next, idx++) {
@@ -70,9 +70,9 @@ public:
         length++;
     }
 
-    // calling it after doing any operation
-    // to make sure that our list isn't corrupted
     void debug_verify_data_integrity() {
+        // calling it after doing any operation
+        // to make sure that our list isn't corrupted
         if (length == 0)
             assert(head == nullptr && tail == nullptr);
 
@@ -91,8 +91,9 @@ public:
         assert(cur_length == length);
     }
 
-    // converting the list to a single string for comparison
     string debug_to_string() {
+        // converting the list to a single string for comparison
+
         if (length == 0) return "";
 
         ostringstream oss;
@@ -103,9 +104,10 @@ public:
         return oss.str();
     }
 
-    // vector<Nodes*> will allow us to print the list content
-    // even if it is not linked
+
     void debug_add_node(Node* node){
+        // vector<Nodes*> will allow us to print the list content
+        // even if it is not linked
         debug_data.push_back(node);
     }
 
