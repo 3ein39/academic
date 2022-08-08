@@ -118,6 +118,37 @@ public:
         else
             debug_data.erase(it);
     }
+
+    void debug_print_node(Node* node, bool is_separate = false) {
+        // printing one node info
+        // called by another debug function
+        if (is_separate)
+            cout << "Sep: ";
+        if (node == nullptr){
+            cout << "nullptr\n";
+            return;
+        }
+        cout << node->data << " ";
+        if (node->next == nullptr)
+            cout << "X ";
+        else
+            cout << node->next->data << " ";
+
+        if (node == head)
+            cout << "head\n";
+        else if (node == tail)
+            cout << "tail\n";
+        else
+            cout << "\n";
+    }
+
+    void debug_print_list(string msg = "") {
+        if (msg != "")
+            cout << msg << "\n";
+        for (int i = 0; i < (int) debug_data.size(); ++i)
+            debug_print_node(debug_data[i]);
+        cout << "****************\n" << flush;
+    }
 };
 
 int main() {
