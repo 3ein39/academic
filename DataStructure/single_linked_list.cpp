@@ -31,11 +31,19 @@ public:
     }
 
     // search for a value 0-based
+    // try to improve it by shifting the searched val one step to the left
     int search(int val) {
         int idx = 0;
-        for(Node* cur = head; cur; cur = cur->next, idx++)
-            if (cur->data == val)
-                return idx;
+        Node* previous = nullptr;
+        for(Node* cur = head; cur; cur = cur->next, idx++) {
+            if (cur->data == val) {
+                if (!previous)
+                    return idx;
+                swap(previous->data, cur->data);
+                return idx - 1;
+            }
+            previous = cur;
+        }
         return -1;
     }
 
