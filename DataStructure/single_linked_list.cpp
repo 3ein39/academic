@@ -30,6 +30,15 @@ public:
         return nullptr;
     }
 
+    // search for a value 0-based
+    int search(int val) {
+        int idx = 0;
+        for(Node* cur = head; cur; cur = cur->next, idx++)
+            if (cur->data == val)
+                return idx;
+        return -1;
+    }
+
     void insertEnd(int val) {
         Node* item = new Node(val);
 
