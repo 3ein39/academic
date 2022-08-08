@@ -167,10 +167,7 @@ public:
             Node* current = head-> next;
             delete head;
             head = current;
-            length--;
         }
-        tail = nullptr;
-        debug_verify_data_integrity();
     }
 };
 
