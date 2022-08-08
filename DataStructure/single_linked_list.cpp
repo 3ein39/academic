@@ -6,6 +6,10 @@ struct Node {
     Node* next {}; // pointer to same object
 
     Node(int data) : data(data) {}
+
+    ~Node() {
+        cout << "Destroy value " << data << " at address " << this << "\n";
+    }
 };
 
 class LinkedList {
@@ -58,19 +62,30 @@ public:
         }
         length++;
     }
+
+    // calling it after doing any operation
+    // to make sure that our list isn't corrupted
+    void debug_verify_data_integrity() {
+        if (length == 0)
+            assert(head == nullptr && tail == nullptr);
+
+        if (length)
+            assert(head != nullptr && tail != nullptr);
+
+        if (length == 1)
+            assert(head == tail);
+
+        assert(!tail->next);
+
+        int cur_length = 0;
+        for (Node* cur = head; cur; cur = cur->next, cur_length++)
+            assert(cur_length < 10000); // handling infinite cycle
+
+        assert(cur_length == length);
+    }
 };
 
 int main() {
-    // creating 4 nodes
-    Node* node1 = new Node(6);
-    Node* node2 = new Node(10);
-    Node* node3 = new Node(8);
-    Node* node4 = new Node(15);
-    // linking them together
-    node1->next = node2;
-    node2->next = node3;
-    node3->next = node4;
-    node4->next = nullptr;
 
 
     return 0;
