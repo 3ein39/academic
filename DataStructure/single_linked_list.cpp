@@ -83,6 +83,18 @@ public:
 
         assert(cur_length == length);
     }
+
+    // converting the list to a single string for comparison
+    string debug_to_string() {
+        if (length == 0) return "";
+
+        ostringstream oss;
+        for(Node* cur = head; cur; cur = cur->next){
+            oss << cur->data;
+            if (cur->next) oss << " ";
+        }
+        return oss.str();
+    }
 };
 
 int main() {
