@@ -22,6 +22,14 @@ public:
         cout << "\n";
     }
 
+    // getting nth node 1-based
+    Node* get_nth(int n) {
+        int cnt {0};
+        for (Node* cur = head; cur; cur = cur->next)
+            if (++cnt == n) return cur;
+        return nullptr;
+    }
+
     void insertEnd(int val) {
         Node* item = new Node(val);
 
