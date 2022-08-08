@@ -16,12 +16,9 @@ private:
 public:
     // operations on them
     void print() {
-        Node* temp_head = head;
-
-        while (temp_head != nullptr) {
-            cout << temp_head->data << " ";
-            temp_head = temp_head->next;
-        }
+        // convenient way of printing
+        for (Node* cur = head; cur; cur = cur->next)
+            cout << cur->data << " ";
         cout << "\n";
     }
 
