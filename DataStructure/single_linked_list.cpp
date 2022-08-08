@@ -17,7 +17,14 @@ private:
     Node* head {};
     Node* tail {};
     int length {};
+
+    vector<Node*> debug_data; // add/remove nodes you use
 public:
+    LinkedList() {}
+
+    // preventing copy && assignment constructors
+    LinkedList(const LinkedList&) = delete;
+    LinkedList& operator=(const LinkedList& another) = delete;
     // operations on them
     void print() {
         // convenient way of printing
@@ -94,6 +101,20 @@ public:
             if (cur->next) oss << " ";
         }
         return oss.str();
+    }
+
+    // vector<Nodes*> will allow us to print the list content
+    // even if it is not linked
+    void debug_add_node(Node* node){
+        debug_data.push_back(node);
+    }
+
+    void debug_delete_node(Node* node){
+        auto it = find(debug_data.begin(), debug_data.end(), node);
+        if (it == debug_data.end())
+            cout << "Node does not exist\n";
+        else
+            debug_data.erase(it);
     }
 };
 
