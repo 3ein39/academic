@@ -68,6 +68,7 @@ public:
             tail = item;
         }
         length++;
+        debug_add_node(item);
     }
 
     void insertFront(int val) {
@@ -80,6 +81,16 @@ public:
             head = item;
         }
         length++;
+        debug_add_node(item);
+    }
+
+    void deleteFront() {
+        if (!head) return;
+        Node* current = head-> next;
+        debug_delete_node(head);
+        delete head;
+        head = current;
+        --length;
     }
 
     void debug_verify_data_integrity() {
@@ -179,13 +190,12 @@ int main() {
     list.insertEnd(8);
     list.insertEnd(15);
 
-    list.insertFront(7);
-    list.insertFront(5);
-    list.insertFront(1);
-
-    list.print(); // 1 5 7 6 10 8 15
+    list.deleteFront();
+    list.print();
 
 
+// must see it, otherwise RTE
+    cout << "\n\nNO RTE\n";
 
     return 0;
 }
