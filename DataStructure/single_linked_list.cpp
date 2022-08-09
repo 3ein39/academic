@@ -108,6 +108,13 @@ public:
         debug_verify_data_integrity();
     }
 
+    Node* getNthBack(int n) {
+        int idx = 0;
+        for(Node* cur = head; cur; cur = cur->next)
+            if(++idx + n == length + 1) return cur;
+        return nullptr;
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -187,7 +194,11 @@ int main() {
 
     LinkedList list;
     list.insertEnd(6);
-    list.deleteFront();
+    list.insertEnd(7);
+    list.insertEnd(8);
+    list.insertEnd(9);
+
+    list.debug_print_node(list.getNthBack(2));
 
 
 // must see it, otherwise RTE
