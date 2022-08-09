@@ -104,6 +104,8 @@ public:
         delete head;
         head = current;
         --length;
+        if(!length) tail = head;
+        debug_verify_data_integrity();
     }
 
     void debug_verify_data_integrity() {
@@ -184,6 +186,8 @@ public:
 int main() {
 
     LinkedList list;
+    list.insertEnd(6);
+    list.deleteFront();
 
 
 // must see it, otherwise RTE
