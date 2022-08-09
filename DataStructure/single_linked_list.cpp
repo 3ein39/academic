@@ -19,6 +19,19 @@ private:
     int length {};
 
     vector<Node*> debug_data; // add/remove nodes you use
+    void debug_add_node(Node* node){
+        // vector<Nodes*> will allow us to print the list content
+        // even if it is not linked
+        debug_data.push_back(node);
+    }
+
+    void debug_delete_node(Node* node){
+        auto it = find(debug_data.begin(), debug_data.end(), node);
+        if (it == debug_data.end())
+            cout << "Node does not exist\n";
+        else
+            debug_data.erase(it);
+    }
 public:
     LinkedList() {}
 
@@ -128,20 +141,6 @@ public:
         return oss.str();
     }
 
-    void debug_add_node(Node* node){
-        // vector<Nodes*> will allow us to print the list content
-        // even if it is not linked
-        debug_data.push_back(node);
-    }
-
-    void debug_delete_node(Node* node){
-        auto it = find(debug_data.begin(), debug_data.end(), node);
-        if (it == debug_data.end())
-            cout << "Node does not exist\n";
-        else
-            debug_data.erase(it);
-    }
-
     void debug_print_node(Node* node, bool is_separate = false) {
         // printing one node info
         // called by another debug function
@@ -185,13 +184,6 @@ public:
 int main() {
 
     LinkedList list;
-    list.insertEnd(6);
-    list.insertEnd(10);
-    list.insertEnd(8);
-    list.insertEnd(15);
-
-    list.deleteFront();
-    list.print();
 
 
 // must see it, otherwise RTE
