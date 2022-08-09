@@ -115,6 +115,30 @@ public:
         return nullptr;
     }
 
+    bool isSame1(const LinkedList& other) { // without length
+        Node *h1 = head, *h2 = other.head;
+
+        while (h1 && h2) {
+            if (h1->data != h2->data)
+                return false;
+            h1 = h1->next, h2 = h2->next;
+        }
+        return !h1 && !h2; // checking if they end together or not
+        // !null && !null => true;
+    }
+
+    bool isSame(const LinkedList& other){ // with length
+        if (length != other.length)
+            return false;
+
+        Node* other_h = other.head;
+        for (Node* cur_h = head; cur_h; cur_h = cur_h->next) {
+            if (cur_h->data != other_h->data) return false;
+            else other_h = other_h->next;
+        }
+        return true;
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -192,14 +216,21 @@ public:
 
 int main() {
 
-    LinkedList list;
-    list.insertEnd(6);
-    list.insertEnd(7);
-    list.insertEnd(8);
-    list.insertEnd(9);
+    LinkedList list1;
+    LinkedList list2;
 
-    list.debug_print_node(list.getNthBack(2));
-
+    cout << list1.isSame(list2) << "\n"; // 1
+    list1.insertEnd(6);
+    list1.insertEnd(10);
+    list2.insertEnd(6);
+    cout << list1.isSame(list2) << "\n"; // 0
+    list2.insertEnd(10);
+    cout << list1.isSame(list2) << "\n"; // 1
+    list1.insertEnd(8);
+    list1.insertEnd(15);
+    list2.insertEnd(8);
+    list2.insertEnd(77);
+    cout << list1.isSame(list2) << "\n"; // 0
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
