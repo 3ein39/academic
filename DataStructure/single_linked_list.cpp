@@ -164,6 +164,24 @@ public:
         debug_verify_data_integrity();
     }
 
+    void deleteNthNode(int n) {
+        if(!(n <= length && n > 0)) return;
+
+        if (length <= 1) {
+            deleteFront();
+            return;
+        }
+        else if (length == 2) {
+            n == 1 ? deleteFirstNode() : deleteLastNode();
+            return;
+        }
+        Node* prev = get_nth(n - 1);
+        Node* cur = get_nth(n);
+        prev-> next = cur->next;
+        debug_delete_node(cur);
+        debug_verify_data_integrity();
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -246,10 +264,8 @@ int main() {
     list.insertEnd(2);
     list.insertEnd(3);
 
-    list.deleteLastNode();
-    list.deleteLastNode();
-    list.deleteLastNode();
-    list.debug_print_list(); // 1 2
+    list.deleteNthNode(2);
+    list.debug_print_list();
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
