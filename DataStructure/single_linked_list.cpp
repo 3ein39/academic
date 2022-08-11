@@ -139,6 +139,20 @@ public:
         return true;
     }
 
+    void deleteFirstNode() {
+        assert(length);
+
+        Node* cur = head;
+        head = head->next;
+        debug_delete_node(cur);
+        delete cur;
+        length--;
+
+        if (length == 0) head = tail = nullptr;
+
+        debug_verify_data_integrity();
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -216,21 +230,13 @@ public:
 
 int main() {
 
-    LinkedList list1;
-    LinkedList list2;
+    LinkedList list;
+    list.insertEnd(1);
+    list.insertEnd(2);
+    list.insertEnd(3);
 
-    cout << list1.isSame(list2) << "\n"; // 1
-    list1.insertEnd(6);
-    list1.insertEnd(10);
-    list2.insertEnd(6);
-    cout << list1.isSame(list2) << "\n"; // 0
-    list2.insertEnd(10);
-    cout << list1.isSame(list2) << "\n"; // 1
-    list1.insertEnd(8);
-    list1.insertEnd(15);
-    list2.insertEnd(8);
-    list2.insertEnd(77);
-    cout << list1.isSame(list2) << "\n"; // 0
+    list.deleteFirstNode();
+    list.debug_print_list(); // 2 3
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
