@@ -108,6 +108,19 @@ public:
         debug_verify_data_integrity();
     }
 
+    void deleteLastNode() {
+        if (!tail)
+            return;
+        debug_delete_node(tail);
+        tail = get_nth(length);
+        if (!tail)
+            head = tail;
+        else
+            tail-> next = nullptr;
+
+        debug_verify_data_integrity();
+    }
+
     Node* getNthBack(int n) {
         int idx = 0;
         for(Node* cur = head; cur; cur = cur->next)
@@ -233,8 +246,10 @@ int main() {
     list.insertEnd(2);
     list.insertEnd(3);
 
-    list.deleteFirstNode();
-    list.debug_print_list(); // 2 3
+    list.deleteLastNode();
+    list.deleteLastNode();
+    list.deleteLastNode();
+    list.debug_print_list(); // 1 2
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
