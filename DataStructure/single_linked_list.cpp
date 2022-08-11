@@ -194,6 +194,15 @@ public:
         }
     }
 
+    void swap_pairs() {
+        for (Node* cur = head; cur; cur = cur->next->next) {
+            Node* next = cur->next;
+            if (next)
+                swap(next->data, cur->data);
+            else break;
+        }
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -275,9 +284,12 @@ int main() {
     list.insertEnd(1);
     list.insertEnd(2);
     list.insertEnd(3);
+    list.insertEnd(4);
+    list.insertEnd(5);
 
-    list.deleteNthNode(2);
-    list.debug_print_list();
+
+    list.swap_pairs();
+    list.print();
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
