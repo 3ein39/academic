@@ -31,6 +31,8 @@ private:
             cout << "Node does not exist\n";
         else
             debug_data.erase(it);
+        delete node;
+        length--;
     }
 public:
     LinkedList() {}
@@ -101,9 +103,7 @@ public:
         if (!head) return;
         Node* current = head-> next;
         debug_delete_node(head);
-        delete head;
         head = current;
-        --length;
         if(!length) tail = head;
         debug_verify_data_integrity();
     }
@@ -145,8 +145,6 @@ public:
         Node* cur = head;
         head = head->next;
         debug_delete_node(cur);
-        delete cur;
-        length--;
 
         if (length == 0) head = tail = nullptr;
 
