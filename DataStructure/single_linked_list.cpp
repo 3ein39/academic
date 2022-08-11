@@ -166,7 +166,7 @@ public:
 
     void deleteNthNode(int n) {
         if(!(n <= length && n > 0)) return;
-        
+
         if (n == length) {
             deleteLastNode();
             return;
@@ -178,10 +178,20 @@ public:
         }
 
         Node* prev = get_nth(n - 1);
-        Node* cur = get_nth(n);
+        Node* cur = prev->next;
         prev-> next = cur->next;
         debug_delete_node(cur);
         debug_verify_data_integrity();
+    }
+
+    void delete_node_with_key(int value) {
+        int pos = 1;
+        for (Node* cur = head; cur; cur = cur->next){
+            if (value == cur->data) {
+                deleteNthNode(pos);
+                return;
+            }
+        }
     }
 
     void debug_verify_data_integrity() {
