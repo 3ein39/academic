@@ -203,6 +203,26 @@ public:
         }
     }
 
+    void reverse() {
+        if (length <= 1)
+            return;
+
+        tail = head;
+        Node* prv = head;
+        head = head->next;
+
+        while (head) {
+            Node* next = head->next;
+            head->next = prv;
+
+            prv = head;
+            head = next;
+        }
+
+        head = prv;
+        tail->next = nullptr;
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
