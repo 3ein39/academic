@@ -166,15 +166,17 @@ public:
 
     void deleteNthNode(int n) {
         if(!(n <= length && n > 0)) return;
+        
+        if (n == length) {
+            deleteLastNode();
+            return;
+        }
 
-        if (length <= 1) {
-            deleteFront();
+        if (n == 1) {
+            deleteFirstNode();
             return;
         }
-        else if (length == 2) {
-            n == 1 ? deleteFirstNode() : deleteLastNode();
-            return;
-        }
+
         Node* prev = get_nth(n - 1);
         Node* cur = get_nth(n);
         prev-> next = cur->next;
