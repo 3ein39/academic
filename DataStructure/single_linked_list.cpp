@@ -203,24 +203,25 @@ public:
         }
     }
 
-    void reverse() {
-        if (length <= 1)
-            return;
+    void delete_next_node(Node* node) {
+        Node* to_delete = node->next;
+        bool is_tail = to_delete == tail;
 
-        tail = head;
-        Node* prv = head;
-        head = head->next;
+        node->next = node->next->next;
+        debug_delete_node(to_delete);
 
-        while (head) {
-            Node* next = head->next;
-            head->next = prv;
+        if(tail)
+            tail = node;
+    }
 
-            prv = head;
-            head = next;
+    void delete_even_positions() {
+        for(Node *cur = head->next, *prv = head; cur;) {
+            delete_next_node(prv);
+            if (!prv->next)
+                break;
+            cur = prv->next->next;
+            prv = prv->next;
         }
-
-        head = prv;
-        tail->next = nullptr;
     }
 
     void debug_verify_data_integrity() {
@@ -305,10 +306,10 @@ int main() {
     list.insertEnd(2);
     list.insertEnd(3);
     list.insertEnd(4);
-    list.insertEnd(5);
+    list.insertEnd(10);
 
+    list.delete_even_positions(); // 1 3 10
 
-    list.swap_pairs();
     list.print();
 
 // must see it, otherwise RTE
