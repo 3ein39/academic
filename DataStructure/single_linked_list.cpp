@@ -224,6 +224,42 @@ public:
         }
     }
 
+    void insert_sorted(int value) {
+        if (length == 0) {
+            insertEnd(value);
+            return;
+        } else if (length == 1) {
+            if (head->data > value) insertFront(value);
+            else insertEnd(value);
+            return;
+        }
+
+        if (value >= tail->data) {
+            insertEnd(value);
+            return;
+        }
+
+        if (value <= head->data) {
+            insertFront(value);
+            return;
+        }
+
+        Node* item = new Node(value);
+        for(Node *cur = head->next, *prv = head; cur;) {
+            if (value >= prv->data && value <= cur->data) {
+                prv->next = item;
+                item->next = cur;
+                length++;
+                debug_add_node(item);
+                break;
+            }
+            else {
+                cur = cur->next;
+                prv = prv->next;
+            }
+        }
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -302,15 +338,15 @@ public:
 int main() {
 
     LinkedList list;
-    list.insertEnd(1);
-    list.insertEnd(2);
-    list.insertEnd(3);
-    list.insertEnd(4);
-    list.insertEnd(10);
+    list.insert_sorted(10);
+    list.insert_sorted(2);
+    list.insert_sorted(30);
+    list.insert_sorted(4);
+    list.insert_sorted(1);
 
-    list.delete_even_positions(); // 1 3 10
-
-    list.print();
+    list.print(); // 1 2 4 10 30
+    list.debug_print_list();
+    list.debug_verify_data_integrity();
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
