@@ -260,6 +260,18 @@ public:
         }
     }
 
+    void swap_head_tail() {
+        Node* prv = head;
+        Node* cur = head->next;
+        while (cur->next) cur = cur->next, prv = prv->next;
+
+        prv->next = head;
+        tail->next = head->next;
+        head->next = nullptr;
+
+        swap(head, tail);
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -338,13 +350,13 @@ public:
 int main() {
 
     LinkedList list;
-    list.insert_sorted(10);
-    list.insert_sorted(2);
-    list.insert_sorted(30);
-    list.insert_sorted(4);
-    list.insert_sorted(1);
+    list.insertEnd(6);
+    list.insertEnd(10);
+    list.insertEnd(8);
+    list.insertEnd(15);
 
-    list.print(); // 1 2 4 10 30
+    list.debug_print_list();
+    list.swap_head_tail();
     list.debug_print_list();
     list.debug_verify_data_integrity();
 
