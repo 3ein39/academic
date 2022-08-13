@@ -283,6 +283,22 @@ public:
         }
     }
 
+    void delete_duplicates() {
+        vector<int> list;
+        list.push_back(head->data);
+        for(Node *cur = head->next, *prv = head; cur;) {
+            if (find(list.begin(),list.end(), cur->data) != list.end()) {
+                delete_next_node(prv);
+                cur = prv->next;
+            }
+            else {
+                list.push_back(cur->data);
+                cur = cur->next;
+                prv = prv->next;
+            }
+        }
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -361,12 +377,11 @@ public:
 int main() {
 
     LinkedList list;
-    list.insertEnd(6);
-    list.insertEnd(10);
-    list.insertEnd(8);
-    list.insertEnd(15);
+    list.insertEnd(1);
+    list.insertEnd(1);
+    list.insertEnd(1);
 
-    list.rotate_left(2);
+    list.delete_duplicates();
     list.print();
     list.debug_print_list();
     list.debug_verify_data_integrity();
