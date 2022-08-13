@@ -231,6 +231,35 @@ public:
         deleteNthNode(nth_to_delete);
     }
 
+    Node* move_to_back(Node* cur, Node* prv) {
+        Node* next = cur->next;
+        tail-> next = cur;
+
+        if (prv)
+            prv->next = next;
+        else
+            head = next;
+
+        tail = cur;
+        tail->next = nullptr;
+        return next;
+    }
+
+    void move_key_occurrence_to_end(int key) {
+        // given a key .. move all its nodes to the end
+        // 1 2 3 4 1 => 2 3 4 1 1
+        if (length <= 1)
+            return;
+
+        int sz = length;
+        for(Node * cur = head, *prv = nullptr; sz--;) {
+            if (cur->data == key)
+                cur = move_to_back(cur, prv);
+            else
+                prv = cur, cur = cur->next;
+        }
+    }
+
     void insert_sorted(int value) {
         if (length == 0) {
             insertEnd(value);
@@ -385,12 +414,14 @@ int main() {
 
     LinkedList list;
     list.insertEnd(1);
+    list.insertEnd(1);
     list.insertEnd(2);
     list.insertEnd(3);
+    list.insertEnd(2);
     list.insertEnd(4);
     list.insertEnd(1);
 
-    list.delete_last_occurrence(7);
+    list.move_key_occurrence_to_end(1);
     list.print();
     list.debug_print_list();
     list.debug_verify_data_integrity();
