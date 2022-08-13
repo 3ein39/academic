@@ -272,6 +272,17 @@ public:
         swap(head, tail);
     }
 
+    void rotate_left(int k) {
+        k = k % length;
+        while (k--) {
+            tail-> next = head;
+            Node* new_head = head-> next;
+            head-> next = nullptr;
+            tail = head;
+            head = new_head;
+        }
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -355,8 +366,8 @@ int main() {
     list.insertEnd(8);
     list.insertEnd(15);
 
-    list.debug_print_list();
-    list.swap_head_tail();
+    list.rotate_left(2);
+    list.print();
     list.debug_print_list();
     list.debug_verify_data_integrity();
 
