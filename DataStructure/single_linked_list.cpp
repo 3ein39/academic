@@ -335,6 +335,18 @@ public:
         }
     }
 
+    int get_max(Node* head) {
+        Node* cur = head;
+        int max_value;
+        if(!cur->next) {
+            max_value = cur->data;
+            return max_value;
+        }
+        max_value = get_max(cur->next);
+        max_value = max(max_value, cur->data);
+        return max_value;
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -416,15 +428,16 @@ int main() {
     list.insertEnd(1);
     list.insertEnd(1);
     list.insertEnd(2);
-    list.insertEnd(3);
+    list.insertEnd(9);
     list.insertEnd(2);
     list.insertEnd(4);
     list.insertEnd(1);
 
-    list.move_key_occurrence_to_end(1);
     list.print();
     list.debug_print_list();
     list.debug_verify_data_integrity();
+
+    cout << list.get_max(list.get_nth(1));
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
