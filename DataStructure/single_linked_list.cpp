@@ -224,6 +224,13 @@ public:
         }
     }
 
+    void delete_last_occurrence(int key) {
+        int nth_to_delete {}, nth{1};
+        for(Node* cur = head; cur; cur = cur->next, nth++)
+            if (cur->data == key) nth_to_delete = nth;
+        deleteNthNode(nth_to_delete);
+    }
+
     void insert_sorted(int value) {
         if (length == 0) {
             insertEnd(value);
@@ -378,10 +385,12 @@ int main() {
 
     LinkedList list;
     list.insertEnd(1);
-    list.insertEnd(1);
+    list.insertEnd(2);
+    list.insertEnd(3);
+    list.insertEnd(4);
     list.insertEnd(1);
 
-    list.delete_duplicates();
+    list.delete_last_occurrence(7);
     list.print();
     list.debug_print_list();
     list.debug_verify_data_integrity();
