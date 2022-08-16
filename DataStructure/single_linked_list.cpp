@@ -347,6 +347,62 @@ public:
         return max_value;
     }
 
+    void add_num(LinkedList &another) {
+        // 1,2,3 + 4,5,3 => 5,7,6
+        Node* cur1 = this->head;
+        Node* cur2 = another.head;
+
+        LinkedList new_list;
+
+        int carry = 0, temp;
+        while(cur1 && cur2) {
+            int sum = cur1->data + cur2->data + carry;
+
+            if (sum > 9) {
+                temp = sum % 10;
+                sum /= 10;
+                carry = sum;
+            } else {
+                temp = sum;
+                carry = 0;
+            }
+            cur1->data = temp;
+            cur1 = cur1->next, cur2 = cur2->next;
+        }
+
+//        while (cur1) {
+//            new_list.insertEnd(cur1->data);
+//            cur1 = cur1->next;
+//        }
+
+        while (cur2) {
+            int sum = cur2->data + carry, temp;
+            if (sum > 9) {
+                temp = sum % 10;
+                sum /= 10;
+                carry = sum;
+            } else {
+                temp = sum;
+                carry = 0;
+            }
+            Node* new_node = new Node(temp);
+            this->tail->next = new_node;
+            tail = new_node;
+            tail->next = nullptr;
+            debug_add_node(new_node);
+            length++;
+            cur2 = cur2->next;
+        }
+
+        if (carry) {
+            Node* new_node = new Node(carry);
+            this->tail->next = new_node;
+            tail = new_node;
+            debug_add_node(tail);
+        }
+
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -424,20 +480,26 @@ public:
 
 int main() {
 
-    LinkedList list;
-    list.insertEnd(1);
-    list.insertEnd(1);
-    list.insertEnd(2);
-    list.insertEnd(9);
-    list.insertEnd(2);
-    list.insertEnd(4);
-    list.insertEnd(1);
+    LinkedList list1;
+    list1.insertEnd(9);
+    list1.insertEnd(6);
+    list1.insertEnd(5);
 
-    list.print();
-    list.debug_print_list();
-    list.debug_verify_data_integrity();
+    LinkedList list2;
+    list2.insertEnd(8);
+    list2.insertEnd(7);
+    list2.insertEnd(6);
+    list2.insertEnd(4);
+    list2.insertEnd(5);
+    list2.insertEnd(7);
+    list2.insertEnd(8);
+    list2.insertEnd(9);
 
-    cout << list.get_max(list.get_nth(1));
+    list1.add_num(list2);
+    list1.print();
+    list1.debug_print_list();
+    list1.debug_verify_data_integrity();
+
 
 // must see it, otherwise RTE
     cout << "\n\nNO RTE\n";
