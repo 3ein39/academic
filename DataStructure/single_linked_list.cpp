@@ -348,59 +348,33 @@ public:
     }
 
     void add_num(LinkedList &another) {
-        // 1,2,3 + 4,5,3 => 5,7,6
-        Node* cur1 = this->head;
-        Node* cur2 = another.head;
+// 1,2,3 + 4,5,3 => 5,7,6
+        Node* my_cur = this->head;
+        Node* his_cur = another.head;
 
-        LinkedList new_list;
-
-        int carry = 0, temp;
-        while(cur1 && cur2) {
-            int sum = cur1->data + cur2->data + carry;
-
-            if (sum > 9) {
-                temp = sum % 10;
-                sum /= 10;
-                carry = sum;
-            } else {
-                temp = sum;
-                carry = 0;
+        int carry = 0, my_data, his_data;
+        while (my_cur || his_cur) {
+            my_data = 0, his_data = 0;
+            if (my_cur)
+                my_data = my_cur->data;
+            if (his_cur) {
+                his_data = his_cur->data;
+                his_cur = his_cur->next;
             }
-            cur1->data = temp;
-            cur1 = cur1->next, cur2 = cur2->next;
-        }
 
-//        while (cur1) {
-//            new_list.insertEnd(cur1->data);
-//            cur1 = cur1->next;
-//        }
+            my_data += his_data + carry;
+            carry = my_data / 10;
+            my_data %= 10;
 
-        while (cur2) {
-            int sum = cur2->data + carry, temp;
-            if (sum > 9) {
-                temp = sum % 10;
-                sum /= 10;
-                carry = sum;
+            if (my_cur) {
+                my_cur->data = my_data;
+                my_cur = my_cur->next;
             } else {
-                temp = sum;
-                carry = 0;
+                insertEnd(my_data);
             }
-            Node* new_node = new Node(temp);
-            this->tail->next = new_node;
-            tail = new_node;
-            tail->next = nullptr;
-            debug_add_node(new_node);
-            length++;
-            cur2 = cur2->next;
         }
-
-        if (carry) {
-            Node* new_node = new Node(carry);
-            this->tail->next = new_node;
-            tail = new_node;
-            debug_add_node(tail);
-        }
-
+        if (carry)
+            insertEnd(carry);
     }
 
     void debug_verify_data_integrity() {
