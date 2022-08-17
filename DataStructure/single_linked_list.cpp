@@ -377,6 +377,51 @@ public:
             insertEnd(carry);
     }
 
+    void remove_all_repeated() {
+        Node* cur = head;
+
+        while (cur->next) {
+            if (cur->data == cur->next->data && head == cur) {
+                first:
+                int cnt{};
+                int temp = cur->data;
+                while (cur && temp == cur->data) {
+                    cur = cur->next;
+                    cnt++;
+                }
+                while (cnt--) {
+                    Node* to_delete = head;
+                    head = head->next;
+                    debug_delete_node(to_delete);
+                }
+            }
+            if(!head) break;
+            if (head->next && head->data == head->next->data) goto first; // handling edge case
+            Node* prv = cur;
+            cur = cur->next;
+            if (!cur) break;
+            if (cur->data != cur->next->data) {
+                prv = cur;
+                cur = cur->next;
+            }
+            else {
+                int cnt{};
+                int temp = cur->data;
+                while (temp == cur->data) {
+                    cur = cur->next;
+                    cnt++;
+                }
+                while (cnt--) {
+                    Node* to_delete = prv->next;
+                    prv->next = prv->next->next;
+                    debug_delete_node(to_delete);
+                }
+            }
+            tail = prv->next;
+        }
+        if (!head) head = tail = nullptr;
+    }
+
     void debug_verify_data_integrity() {
         // calling it after doing any operation
         // to make sure that our list isn't corrupted
@@ -455,21 +500,15 @@ public:
 int main() {
 
     LinkedList list1;
-    list1.insertEnd(9);
-    list1.insertEnd(6);
-    list1.insertEnd(5);
+    list1.insertEnd(1);
+    list1.insertEnd(1);
+//    list1.insertEnd(5);
+//    list1.insertEnd(2);
+//    list1.insertEnd(2);
+//    list1.insertEnd(2);
+//    list1.insertEnd(3);
 
-    LinkedList list2;
-    list2.insertEnd(8);
-    list2.insertEnd(7);
-    list2.insertEnd(6);
-    list2.insertEnd(4);
-    list2.insertEnd(5);
-    list2.insertEnd(7);
-    list2.insertEnd(8);
-    list2.insertEnd(9);
-
-    list1.add_num(list2);
+    list1.remove_all_repeated();
     list1.print();
     list1.debug_print_list();
     list1.debug_verify_data_integrity();
