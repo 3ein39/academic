@@ -12,6 +12,27 @@ public:
         cout<<"Constructor\n";
         SetFirst(first), SetSecond(second);
     }
+    /*
+     * as operator overloading
+     * but ...
+     * Rvalue reference has a higher priority
+     */
+    MyPair(MyPair&& other) {
+        // rvalue reference operator
+        // move constructor
+        cout << "move constructor\n";
+        // 1) copy pointer address
+        firstPtr = other.firstPtr;
+        secondPtr = other.secondPtr;
+        // 2) Null other
+        other.firstPtr = other.secondPtr = nullptr;
+
+    }
+    /*
+     * in copy constructors we are creating new int *
+     * and then moving the data
+     * ... that's why move constructors is more optimized in terms of performance
+     */
     MyPair(const MyPair& other) {
         cout<<"Copy Constructor\n";
         SetFirst(*other.firstPtr), SetSecond(*other.secondPtr);
@@ -37,6 +58,13 @@ public:
     }
     ~MyPair() {
         cout<<"~MyPair()\n";
+
+        if (!firstPtr && !secondPtr)
+            cout << "\tFreed already by a move!\n";
+        /*
+         * very important before deleting anything to double-check
+         * if it is freed or not
+         */
         if (firstPtr != nullptr)
             delete firstPtr;
 
@@ -49,15 +77,17 @@ int main() {
     vector<MyPair> v;
 
     v.push_back(MyPair(3, 6)); // rvalue
-    // Constructor for temp MyPair(3, 6)       ^
-    // Create 2 integers                       |
-    // Copy Constructor                        |
-    // Create 2 integers, copy data            |
-    // ~MyPair()                               |
-    // Delete 2 integers of tmp  - - - - - - - |
+    // Constructor for temp MyPair(3, 6)
+        // Create 2 integers
+    // Move constructor
+        // No creation/copying
     // ~MyPair()
-    // Delete 2 integers from the actual vector
+        // already freed by a move
+    // ~MyPair()
+        // Delete 2 integers from the actual vector
 
+        MyPair p1(1, 5);
+        MyPair p2(p1); // lvalue gonna call copy constructor
 
     return 0;
 }
