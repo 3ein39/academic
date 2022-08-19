@@ -304,6 +304,21 @@ public:
                 cur = delete_and_link(cur);
         debug_verify_data_integrity();
     }
+
+    void delete_odd_positions() {
+        int cnt {1};
+        Node* cur = head->next;
+        delete_front();
+        for (cur = head; cur; cur = cur->next, ++cnt)
+            if (cnt %2 == 0) {
+                cur = delete_and_link(cur);
+
+                // Integrity
+                if (!cur->next)
+                    tail = cur;
+            }
+        debug_verify_data_integrity();
+    }
 };
 int main() {
     LinkedList list;
@@ -313,7 +328,7 @@ int main() {
     list.insertSorted(4);
     list.insertSorted(10);
 
-    list.delete_even_positions();
+    list.delete_odd_positions();
     list.print();
     list.debug_print_list();
 
