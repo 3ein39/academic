@@ -197,12 +197,18 @@ public:
     }
 
     void insertSorted(int value) {
-        Node* item = new Node(value);
-
-        if (!head) {
-            head = tail = item;
-            add_node(item);
-            return;
+        if (!head || value <= head->data)
+            insertFront(value);
+        else if (tail->data <= value)
+            insertEnd(value);
+        else {
+            // Find the node i am less than
+            for (Node* cur = head; cur; cur = cur->next) {
+                if (value <= cur->data) {
+                    embed_after(cur->prev, value);
+                    break;
+                }
+            }
         }
 
         Node* cur = head;
@@ -221,6 +227,16 @@ public:
         }
 
         debug_verify_data_integrity();
+    }
+
+    void embed_after(Node* node_before, int value) {
+        Node* middle = new Node(value);
+        ++length;
+        debug_add_node(middle);
+
+        Node* node_after = node_before->next;
+        link(node_before, middle);
+        link(middle, node_after);
     }
 };
 int main() {
