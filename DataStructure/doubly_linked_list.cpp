@@ -222,6 +222,68 @@ public:
         link(node_before, middle);
         link(middle, node_after);
     }
+
+    void delete_front() {
+        if (!head)
+            return;
+
+        Node* cur = head->next;
+        delete_node(head);
+        head = cur;
+
+        // Integrity things
+        if (head)
+            head->prev = nullptr;
+        else if (!length)
+            tail = nullptr;
+
+        debug_verify_data_integrity();
+    }
+
+    void delete_end() {
+        if (!head)
+            return;
+
+        Node* cur = tail->prev;
+        delete_node(tail);
+        tail = cur;
+
+        // Integrity
+        if (tail)
+            tail->next = nullptr;
+        else if (!length)
+            head = nullptr;
+
+        debug_verify_data_integrity();
+    }
+
+    Node* delete_and_link(Node* cur) {
+        // useful utility returns the node before the deleted one
+        Node* ret = cur->prev;
+        link(cur->prev, cur->next);
+        delete_node(cur);
+
+        return ret;
+    }
+
+    void delete_node_with_key(int value) {
+        if (!length)
+            return;
+        if (head->data == value)
+            delete_front();
+        else {
+            for (Node* cur = head; cur; cur = cur->next) {
+                if (cur->data == value) {
+                    cur = delete_and_link(cur);
+                    if (!cur->next) // if we removed last node
+                        tail = cur;
+                    break;
+                }
+            }
+        }
+        debug_verify_data_integrity();
+    }
+
 };
 int main() {
 
