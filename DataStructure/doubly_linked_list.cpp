@@ -161,8 +161,35 @@ public:
             cout << cur->data << " ";
         cout << "\n";
     }
+
+    void link(Node* first, Node* second) {
+        if (first)
+            first->next = second;
+        if (second)
+            second->prev = first;
+    }
+
+    void insertEnd(int value) {
+        Node* item = new Node(value);
+        add_node(item);
+
+        if (!head)
+            head = tail = item;
+        else {
+            link(tail, item);
+            tail = item;
+        }
+        debug_verify_data_integrity();
+    }
 };
 int main() {
+
+    LinkedList list;
+    list.insertEnd(1);
+    list.insertEnd(2);
+    list.insertEnd(3);
+
+    list.debug_print_list();
 
     return 0;
 }
