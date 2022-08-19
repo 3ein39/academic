@@ -134,7 +134,6 @@ public:
             if (len == length-1)	// make sure we end at head
                 assert(cur == head);
         }
-        cout << "\n";
     }
     ////////////////////////////////////////////////////////////
 
@@ -283,6 +282,7 @@ public:
         }
         debug_verify_data_integrity();
     }
+
     void delete_all_nodes_with_key(int value) {
         for (Node* cur = head; cur; cur = cur->next) {
             if (cur->data == value) {
@@ -297,18 +297,23 @@ public:
         debug_verify_data_integrity();
     }
 
+    void delete_even_positions() {
+        int cnt {1};
+        for (Node* cur = head; cur; cur = cur->next, ++cnt)
+            if (cnt %2 == 0)
+                cur = delete_and_link(cur);
+        debug_verify_data_integrity();
+    }
 };
 int main() {
     LinkedList list;
     list.insertSorted(1);
     list.insertSorted(2);
-    list.insertSorted(5);
+    list.insertSorted(3);
     list.insertSorted(4);
-    list.insertSorted(5);
-    list.insertSorted(4);
-    list.insertSorted(4);
+    list.insertSorted(10);
 
-    list.delete_all_nodes_with_key(5);
+    list.delete_even_positions();
     list.print();
     list.debug_print_list();
 
