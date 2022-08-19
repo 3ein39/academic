@@ -324,16 +324,25 @@ public:
             }
         debug_verify_data_integrity();
     }
+
+    bool is_palindrome() {
+        if (!length)
+            return true;
+        int cnt = length / 2;
+        Node *start = head, *end = tail;
+
+        while (cnt--) {
+            if (start->data != end->data)
+                return false;
+            start = start->next, end = end->prev;
+        }
+        return true;
+    }
 };
 int main() {
     LinkedList list;
-    list.insertSorted(1);
-    list.insertSorted(2);
-    list.insertSorted(3);
-    list.insertSorted(4);
-    list.insertSorted(10);
 
-    list.delete_odd_positions();
+    cout << list.is_palindrome() << endl;
     list.print();
     list.debug_print_list();
 
