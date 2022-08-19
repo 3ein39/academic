@@ -283,18 +283,33 @@ public:
         }
         debug_verify_data_integrity();
     }
+    void delete_all_nodes_with_key(int value) {
+        for (Node* cur = head; cur; cur = cur->next) {
+            if (cur->data == value) {
+                cur = delete_and_link(cur);
+
+                // Integrity
+                if (!cur->next)
+                    tail = cur;
+            }
+        }
+
+        debug_verify_data_integrity();
+    }
 
 };
 int main() {
-
     LinkedList list;
     list.insertSorted(1);
     list.insertSorted(2);
-    list.insertSorted(0);
-    list.insertSorted(9);
-    list.insertSorted(10);
-    list.insertSorted(7);
+    list.insertSorted(5);
+    list.insertSorted(4);
+    list.insertSorted(5);
+    list.insertSorted(4);
+    list.insertSorted(4);
 
+    list.delete_all_nodes_with_key(5);
+    list.print();
     list.debug_print_list();
 
     return 0;
