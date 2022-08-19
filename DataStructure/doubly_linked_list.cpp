@@ -298,20 +298,8 @@ public:
     }
 
     void delete_even_positions() {
-        /*
-         * try to reuse your code .. DRY
-         * */
-        insertFront(-1); // dummy node
-        delete_even_positions();
-        delete_front();
-        debug_verify_data_integrity();
-    }
-
-    void delete_odd_positions() {
         int cnt {1};
-        Node* cur = head->next;
-        delete_front();
-        for (cur = head; cur; cur = cur->next, ++cnt)
+        for (Node* cur = head; cur; cur = cur->next, ++cnt)
             if (cnt %2 == 0) {
                 cur = delete_and_link(cur);
 
@@ -319,6 +307,16 @@ public:
                 if (!cur->next)
                     tail = cur;
             }
+        debug_verify_data_integrity();
+    }
+
+    void delete_odd_positions() {
+        /*
+         * try to reuse your code .. DRY
+         * */
+        insertFront(-1); // dummy node
+        delete_even_positions();
+        delete_front();
         debug_verify_data_integrity();
     }
 
