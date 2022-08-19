@@ -181,6 +181,20 @@ public:
         }
         debug_verify_data_integrity();
     }
+
+    void insertFront(int value) {
+        Node* item = new Node(value);
+        add_node(item);
+
+        if (!head)
+            head = tail = item;
+        else {
+            link(item, head);
+            head = item;
+        }
+
+        debug_verify_data_integrity();
+    }
 };
 int main() {
 
@@ -188,6 +202,7 @@ int main() {
     list.insertEnd(1);
     list.insertEnd(2);
     list.insertEnd(3);
+    list.insertFront(0);
 
     list.debug_print_list();
 
