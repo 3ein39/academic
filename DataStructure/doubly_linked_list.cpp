@@ -210,22 +210,6 @@ public:
                 }
             }
         }
-
-        Node* cur = head;
-        Node* prv = nullptr;
-        while (cur) {
-            if (cur->data >= value) break;
-
-            prv = cur, cur = cur->next;
-        }
-        if (!cur) insertEnd(value);
-        else if (cur == head) insertFront(value);
-        else {
-            link(item, cur);
-            link(prv, item);
-            add_node(item);
-        }
-
         debug_verify_data_integrity();
     }
 
