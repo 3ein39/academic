@@ -300,8 +300,13 @@ public:
     void delete_even_positions() {
         int cnt {1};
         for (Node* cur = head; cur; cur = cur->next, ++cnt)
-            if (cnt %2 == 0)
+            if (cnt %2 == 0) {
                 cur = delete_and_link(cur);
+
+                // Integrity
+                if (!cur->next)
+                    tail = cur;
+            }
         debug_verify_data_integrity();
     }
 
