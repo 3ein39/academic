@@ -195,14 +195,43 @@ public:
 
         debug_verify_data_integrity();
     }
+
+    void insertSorted(int value) {
+        Node* item = new Node(value);
+
+        if (!head) {
+            head = tail = item;
+            add_node(item);
+            return;
+        }
+
+        Node* cur = head;
+        Node* prv = nullptr;
+        while (cur) {
+            if (cur->data >= value) break;
+
+            prv = cur, cur = cur->next;
+        }
+        if (!cur) insertEnd(value);
+        else if (cur == head) insertFront(value);
+        else {
+            link(item, cur);
+            link(prv, item);
+            add_node(item);
+        }
+
+        debug_verify_data_integrity();
+    }
 };
 int main() {
 
     LinkedList list;
-    list.insertEnd(1);
-    list.insertEnd(2);
-    list.insertEnd(3);
-    list.insertFront(0);
+    list.insertSorted(1);
+    list.insertSorted(2);
+    list.insertSorted(0);
+    list.insertSorted(9);
+    list.insertSorted(10);
+    list.insertSorted(7);
 
     list.debug_print_list();
 
