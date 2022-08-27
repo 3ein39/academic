@@ -333,11 +333,61 @@ public:
         }
         return true;
     }
+
+    Node* get_nth(int n) {
+        Node* cur = head;
+        while(n--) cur=cur->next;
+
+        return cur;
+    }
+
+    void swap_forward_with_backward(int k) {
+        if (k > length) return;
+        int kth_back = length - k + 1;
+
+        if (k == kth_back)
+            return;
+
+        if (k > kth_back)
+            swap(k, kth_back);
+
+        Node* first = get_nth(k);
+        Node* last = get_nth(kth_back);
+
+        Node* first_next = first->next;
+        Node* first_prev = first->prev;
+
+        Node* last_next = last->next;
+        Node* last_prev = last->prev;
+
+        if (k + 1 == kth_back) { // neighbours
+            link(first_prev, last);
+            link(last, first);
+            link(first, last_next);
+        } else {
+            link(first_prev, last);
+            link(last, first);
+
+            link(last_prev, first);
+            link(first, last_next);
+        }
+        if (k == 1);
+        swap(head, tail);
+
+        debug_verify_data_integrity();
+    }
+
 };
 int main() {
     LinkedList list;
+    list.insertEnd(6);
+    list.insertEnd(10);
+    list.insertEnd(8);
+    list.insertEnd(15);
+    list.insertEnd(9);
+    list.insertEnd(20);
 
-    cout << list.is_palindrome() << endl;
+    list.swap_forward_with_backward(2);
     list.print();
     list.debug_print_list();
 
