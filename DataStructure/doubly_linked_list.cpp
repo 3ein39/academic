@@ -377,17 +377,37 @@ public:
         debug_verify_data_integrity();
     }
 
+    void reverse() {
+        if (length <= 1)
+            return;
+
+        Node* first = head;
+        Node* second = head->next;
+
+        while(second) {
+            Node *first_ = second, *second_ = second->next;
+
+            link(second, first);
+            first = first_, second = second_;
+        }
+
+        swap(head, tail);
+        head->prev = tail->next = nullptr;
+
+        debug_verify_data_integrity();
+    }
+
 };
 int main() {
     LinkedList list;
+    list.insertEnd(1);
+    list.insertEnd(2);
+    list.insertEnd(3);
+    list.insertEnd(4);
+    list.insertEnd(5);
     list.insertEnd(6);
-    list.insertEnd(10);
-    list.insertEnd(8);
-    list.insertEnd(15);
-    list.insertEnd(9);
-    list.insertEnd(20);
 
-    list.swap_forward_with_backward(2);
+    list.reverse();
     list.print();
     list.debug_print_list();
 
