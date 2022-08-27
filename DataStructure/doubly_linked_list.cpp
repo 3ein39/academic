@@ -397,19 +397,59 @@ public:
         debug_verify_data_integrity();
     }
 
+    void merge_sorted(LinkedList& other) {
+        auto list = new LinkedList();
+
+        Node* cur1 = this->head;
+        Node* cur2 = other.head;
+
+        while(cur1 && cur2) {
+            if (cur1->data <= cur2->data) {
+                list->insertEnd(cur1->data);
+                cur1 = cur1->next;
+            } else {
+                list->insertEnd(cur2->data);
+                cur2 = cur2->next;
+            }
+        }
+
+        while (cur1) {
+            list->insertEnd(cur1->data);
+            cur1 = cur1->next;
+        }
+
+        while(cur2) {
+            list->insertEnd(cur2->data);
+            cur2 = cur2->next;
+        }
+
+        this->head = list->head;
+        this->tail = list->tail;
+        this->length = list->length;
+        this->debug_data = list->debug_data;
+
+        debug_verify_data_integrity();
+    }
+
 };
 int main() {
-    LinkedList list;
-    list.insertEnd(1);
-    list.insertEnd(2);
-    list.insertEnd(3);
-    list.insertEnd(4);
-    list.insertEnd(5);
-    list.insertEnd(6);
+    LinkedList list1;
+    list1.insertEnd(10);
+    list1.insertEnd(20);
+    list1.insertEnd(30);
+    list1.insertEnd(40);
+    list1.insertEnd(50);
 
-    list.reverse();
-    list.print();
-    list.debug_print_list();
+    LinkedList list2;
+    list2.insertEnd(15);
+    list2.insertEnd(17);
+    list2.insertEnd(22);
+    list2.insertEnd(24);
+    list2.insertEnd(35);
+
+    list1.merge_sorted(list2);
+    list1.print();
+    list1.debug_print_list();
 
     return 0;
 }
