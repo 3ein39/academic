@@ -39,6 +39,12 @@ public:
             return 1;
         return 0;
     }
+
+    void display() {
+        for (int i = top; i > -1; --i)
+            cout << array[i] << " ";
+        cout << "\n";
+    }
 };
 
 int main() {
@@ -47,9 +53,7 @@ int main() {
     s.push(2);
     s.push(3);
 
-    cout << s.peek() << endl;
-    s.pop();
-    cout << s.peek();
+    s.display();
 
     return 0;
 }
