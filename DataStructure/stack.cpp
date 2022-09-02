@@ -45,13 +45,27 @@ public:
             cout << array[i] << " ";
         cout << "\n";
     }
+
+    void insert_at_bottom(int x) {
+        if (this->isEmpty()) {
+            this->push(x);
+            return;
+        }
+
+        int my_val = this->pop();
+        insert_at_bottom(x);
+        this->push(my_val);
+    }
 };
 
 int main() {
     Stack s(5);
-    s.push(1);
-    s.push(2);
+    s.push(4);
     s.push(3);
+    s.push(2);
+    s.push(1);
+
+    s.insert_at_bottom(10);
 
     s.display();
 
