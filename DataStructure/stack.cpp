@@ -56,16 +56,27 @@ public:
         insert_at_bottom(x);
         this->push(my_val);
     }
+
+    void reverse() {
+        if (isEmpty())
+            return;
+
+        int my_val = pop();
+
+        reverse();
+
+        insert_at_bottom(my_val);
+    }
 };
 
 int main() {
-    Stack s(5);
-    s.push(4);
-    s.push(3);
-    s.push(2);
+    Stack s(4);
     s.push(1);
+    s.push(2);
+    s.push(3);
+    s.push(4);
 
-    s.insert_at_bottom(10);
+    s.reverse();
 
     s.display();
 
