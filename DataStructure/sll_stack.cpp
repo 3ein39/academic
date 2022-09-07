@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 using namespace std;
 
 class Stack {
@@ -22,6 +23,27 @@ public:
         link(item, head);
         head = item;
         // This push function works as long as machine has more ram
+    }
+
+    int peek() {
+        assert(!isEmpty());
+
+        return head->data;
+    }
+
+    int pop() {
+        assert(!isEmpty());
+
+        int el = head->data;
+        Node* temp = head;
+        head = head->next;
+
+        delete temp;
+        return el;
+    }
+
+    bool isEmpty() {
+        return !head;
     }
 };
 
