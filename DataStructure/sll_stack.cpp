@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include<bits/stdc++.h>
 using namespace std;
 
 typedef char type;
@@ -106,10 +107,31 @@ string infixToPostfix(string infix) {
     return postfix;
 }
 
+double calc(char op, char x, char y) {
+    if (op == '+') return (x) + (y);
+    if (op == '-') return (x) - (y);
+    if (op == '*') return (x) * (y);
+    if (op == '/') return (x) / (double)(y);
+    if (op == '^') return pow((x) ,(y));
+}
+
+double evaluate_postfix(string postfix) {
+    Stack stack;
+    for (int i = 0; i < postfix.size(); ++i) {
+        if (isdigit(postfix[i]))
+            stack.push(postfix[i] - 48);
+        else {
+            auto y = stack.pop(), x = stack.pop();
+            stack.push(calc(postfix[i], x, y));
+        }
+    }
+    return stack.peek();
+}
+
 int main() {
     string equation;
     while (cin >> equation)
-        cout << infixToPostfix(equation) << "\n";
+        cout << evaluate_postfix(equation) << "\n";
     return 0;
 }
 
