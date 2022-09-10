@@ -2,53 +2,107 @@
 #include <cassert>
 using namespace std;
 
+typedef char type;
+
 class Stack {
+private:
+    // Tip: We can make this struct internally
     struct Node {
-        int data;
-        Node* next{};
-
-        Node(int data) : data(data) {};
+        type data { };
+        Node* next { };
+        Node(int data) :
+                data(data) {
+        }
     };
-    Node* head{};
 
-    void link(Node* first, Node* second) {
-        if (first)
-            first->next = second;
-    }
+    Node *head { };
+
 public:
-    void push(int data) {
-        // Great match with stack
-        Node* item = new Node(data);
+    ~Stack() {
+        while (!isEmpty())
+            pop();
+    }
+    void display() {
+        for (Node* cur = head; cur; cur = cur->next)
+            cout << cur->data << " ";
+        cout << "\n";
+    }
 
-        link(item, head);
+    void push(type value) {
+        Node* item = new Node(value);
+        item->next = head;
         head = item;
-        // This push function works as long as machine has more ram
     }
 
-    int peek() {
+    type pop() {
         assert(!isEmpty());
-
-        return head->data;
-    }
-
-    int pop() {
-        assert(!isEmpty());
-
-        int el = head->data;
+        int element = head->data;
         Node* temp = head;
         head = head->next;
-
         delete temp;
-        return el;
+        return element;
     }
 
-    bool isEmpty() {
+    type peek() {
+        assert(!isEmpty());
+        int element = head->data;
+        return element;
+    }
+
+    int isEmpty() {
         return !head;
     }
 };
 
-int main() {
-    cout << "Hello world";
-
+int precedence(char op) {
+    if (op == '+' || op == '-')
+        return 1;
+    if (op == '*' || op == '/')
+        return 2;
     return 0;
 }
+
+/*
+ Assume: no spaces, positive single digits, only + - * /
+ 1+2+3   ==>    12+3+
+ 1+2*3   ==>    123*+
+ 2*3+4   ==>    23*4+
+ 1+3*5-8/2   ==>     135*+82/-
+ 2+3*4-5*6+7		==>		234*+56*-7+
+
+ 2+(3*(4-5*2)*(9/3+6)) ==>  23452*-*93/6+*+
+ */
+
+string infixToPostfix(string infix) {
+    Stack operators;
+    string postfix;
+
+    infix += '-';			// Whatever lowest priority: force stack got empty
+    operators.push('#');	// Remove IsEmpty
+
+    for (int i = 0; i < (int) infix.size(); ++i) {
+        if (isdigit(infix[i]))
+            postfix += infix[i];
+        else if (infix[i] == '(')
+            operators.push(infix[i]);
+        else if (infix[i] == ')') {
+            while (operators.peek() != '(')
+                postfix += operators.pop();
+            operators.pop();	// pop (
+        } else {
+            while (precedence(operators.peek()) >= precedence(infix[i]))
+                postfix += operators.pop();
+            operators.push(infix[i]);
+        }
+    }
+
+    return postfix;
+}
+
+int main() {
+    string equation;
+    while (cin >> equation)
+        cout << infixToPostfix(equation) << "\n";
+    return 0;
+}
+
