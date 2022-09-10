@@ -59,6 +59,8 @@ int precedence(char op) {
         return 1;
     if (op == '*' || op == '/')
         return 2;
+    if (op == '^')
+        return 3;
     return 0;
 }
 
@@ -81,7 +83,7 @@ string infixToPostfix(string infix) {
     operators.push('#');	// Remove IsEmpty
 
     for (int i = 0; i < (int) infix.size(); ++i) {
-        if (isdigit(infix[i]))
+        if (isdigit(infix[i]) || isalpha(infix[i]))
             postfix += infix[i];
         else if (infix[i] == '(')
             operators.push(infix[i]);
@@ -89,7 +91,12 @@ string infixToPostfix(string infix) {
             while (operators.peek() != '(')
                 postfix += operators.pop();
             operators.pop();	// pop (
-        } else {
+        } else if (infix[i] == '^') {
+            while (precedence(operators.peek()) > precedence(infix[i]))
+                postfix += operators.pop();
+            operators.push(infix[i]);
+        }
+        else {
             while (precedence(operators.peek()) >= precedence(infix[i]))
                 postfix += operators.pop();
             operators.push(infix[i]);
