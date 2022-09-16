@@ -48,10 +48,18 @@ public:
         added_elements++;
     }
 
-    int dequeue() {
+    int dequeue_front() {
         assert(!isEmpty());
         int value = array[front];
         front = next(front);
+        --added_elements;
+        return value;
+    }
+
+    int dequeue_rear() {
+        assert(!isEmpty());
+        int value = array[rear];
+        rear = previous(rear);
         --added_elements;
         return value;
     }
@@ -89,11 +97,14 @@ int main() {
     q.enqueue_rear(4);
     q.enqueue_rear(5); // 1 2 3 4 5
                         // f       r
-    q.dequeue(); // 2 3 4 5
+    q.dequeue_front(); // 2 3 4 5
     q.display();
 
     q.enqueue_front(9); // 9 2 3 4 5
-    q.enqueue_front(10); // 9 2 3 4 5
+    q.enqueue_front(10); // 10 9 2 3 4 5
+    q.display();
+
+    q.dequeue_rear(); // 10 9 2 3 4
     q.display();
 
 
