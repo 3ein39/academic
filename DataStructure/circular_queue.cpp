@@ -27,10 +27,24 @@ public:
         //return (pos + 1) % size;	//  Or shorter way
     }
 
-    void enqueue(int value) {
+    int previous(int pos) {
+        --pos;
+        if (pos == -1)
+            pos = size - 1;
+        return pos;
+    }
+
+    void enqueue_rear(int value) {
         assert(!isFull());
         array[rear] = value;
         rear = next(rear);
+        added_elements++;
+    }
+
+    void enqueue_front(int value) {
+        assert(!isFull());
+        front = previous(front);
+        array[front] = value;
         added_elements++;
     }
 
@@ -67,6 +81,22 @@ public:
 };
 
 int main() {
-    
+    Queue q(10);
+
+    q.enqueue_rear(1);
+    q.enqueue_rear(2);
+    q.enqueue_rear(3);
+    q.enqueue_rear(4);
+    q.enqueue_rear(5); // 1 2 3 4 5
+                        // f       r
+    q.dequeue(); // 2 3 4 5
+    q.display();
+
+    q.enqueue_front(9); // 9 2 3 4 5
+    q.enqueue_front(10); // 9 2 3 4 5
+    q.display();
+
+
+
     return 0;
 }
