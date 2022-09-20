@@ -7,14 +7,13 @@ class Queue {
     int size { };
     int front { 0 };
     int rear { 0 };
-    int added_elements { };
     int *array { };
 
 public:
     Queue() {}
     Queue(int size) :
-            size(size) {
-        array = new int[size];
+            size(size + 1) {
+        array = new int[size + 1];
     }
 
     ~Queue() {
@@ -40,21 +39,18 @@ public:
         assert(!isFull());
         array[rear] = value;
         rear = next(rear);
-        added_elements++;
     }
 
     void enqueue_front(int value) {
         assert(!isFull());
         front = previous(front);
         array[front] = value;
-        added_elements++;
     }
 
     int dequeue_front() {
         assert(!isEmpty());
         int value = array[front];
         front = next(front);
-        --added_elements;
         return value;
     }
 
@@ -62,7 +58,6 @@ public:
         assert(!isEmpty());
         int value = array[rear];
         rear = previous(rear);
-        --added_elements;
         return value;
     }
 
@@ -76,22 +71,22 @@ public:
         }
         cout << "\n";
 
-        for (int cur = front, step = 0; step < added_elements; ++step, cur = next(cur))
+        for (int cur = front, step = 0; cur != rear; ++step, cur = next(cur))
             cout << array[cur] << " ";
         cout << "\n\n";
     }
 
     void display_nums_only() {
-        for (int cur = front, step = 0; step < added_elements; ++step, cur = next(cur))
+        for (int cur = front, step = 0; cur != rear; ++step, cur = next(cur))
             cout << array[cur] << " ";
     }
 
     int isEmpty() {
-        return added_elements == 0;
+        return front == rear;
     }
 
     bool isFull() {
-        return added_elements == size;
+        return next(rear) == front;
     }
 };
 
@@ -141,27 +136,50 @@ public:
 
 int main() {
 
-    PriorityQueue tasks(8);
+    Queue qu(6);
+    assert(qu.isEmpty());
+    qu.display();
 
-    tasks.enqueue(1131, 1);
-    tasks.enqueue(3111, 3);
-    tasks.enqueue(2211, 2);
-    tasks.enqueue(3161, 3);
+    for (int i = 1; i <= 6; ++i) {
+        assert(!qu.isFull());
+        qu.enqueue_rear(i);
+        qu.display();
+    }
+    assert(qu.isFull());
 
-    tasks.display();
+    for (int i = 1; i <= 6; ++i) {
+        assert(!qu.isEmpty());
+        qu.dequeue_front();
+        //qu.display();
+    }
 
-    cout << tasks.dequeue() << endl;
-    cout << tasks.dequeue() << endl;
+    for (int i = 1; i <= 6; ++i) {
+        assert(!qu.isFull());
+        qu.enqueue_rear(i);
+        qu.display();
+    }
 
-    tasks.enqueue(1535, 1);
-    tasks.enqueue(2815, 2);
-    tasks.enqueue(3845, 3);
-    tasks.enqueue(3145, 3);
+    qu.dequeue_front();
+    assert(!qu.isFull());
+    qu.enqueue_rear(7);
+    assert(qu.isFull());
+    qu.display();
 
-    tasks.display();
+    qu.dequeue_front();
+    qu.dequeue_front();
+    assert(!qu.isFull());
+    qu.enqueue_rear(8);
+    assert(!qu.isFull());
+    qu.display();
+    qu.enqueue_rear(9);
+    assert(qu.isFull());
+    qu.display();
 
-    while(!tasks.is_empty())
-        cout << tasks.dequeue() << " ";
+    for (int i = 1; i <= 6; ++i) {
+        assert(!qu.isEmpty());
+        qu.dequeue_front();
+        qu.display();
+    }
 
     return 0;
 }
