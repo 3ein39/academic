@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <map>
 using namespace std;
 
 class Queue {
@@ -10,6 +11,7 @@ class Queue {
     int *array { };
 
 public:
+    Queue() {}
     Queue(int size) :
             size(size) {
         array = new int[size];
@@ -79,6 +81,11 @@ public:
         cout << "\n\n";
     }
 
+    void display_nums_only() {
+        for (int cur = front, step = 0; step < added_elements; ++step, cur = next(cur))
+            cout << array[cur] << " ";
+    }
+
     int isEmpty() {
         return added_elements == 0;
     }
@@ -88,26 +95,73 @@ public:
     }
 };
 
+class PriorityQueue {
+    int size {};
+    map<int, Queue*> priority_to_queue_map;
+    int added_elements {};
+public:
+    PriorityQueue(int size) : size(size), added_elements(0) {
+        for(int p = 1; p <= 3; ++p){
+            Queue* q = new Queue(size);
+            priority_to_queue_map[p] = q;
+        }
+    }
+
+    void enqueue(int value, int priority) {
+        assert(added_elements < size);
+        priority_to_queue_map[priority]->enqueue_rear(value);
+        added_elements++;
+    }
+
+    void display() {
+        for(int p = 3; p > 0; --p) {
+            if (priority_to_queue_map.count(p)) {
+                cout << "Priority #" << p << " tasks: ";
+                priority_to_queue_map[p]->display_nums_only();
+                cout << "\n";
+            }
+        }
+    }
+
+    int dequeue() {
+        for(int p = 3; p > 0; --p) {
+            if (priority_to_queue_map.count(p) && !priority_to_queue_map[p]->isEmpty()) {
+                int val = priority_to_queue_map[p]->dequeue_front();
+                --added_elements;
+                return val;
+            }
+        }
+    }
+
+    bool is_empty() {
+        return added_elements == 0;
+    }
+
+};
+
 int main() {
-    Queue q(10);
 
-    q.enqueue_rear(1);
-    q.enqueue_rear(2);
-    q.enqueue_rear(3);
-    q.enqueue_rear(4);
-    q.enqueue_rear(5); // 1 2 3 4 5
-                        // f       r
-    q.dequeue_front(); // 2 3 4 5
-    q.display();
+    PriorityQueue tasks(8);
 
-    q.enqueue_front(9); // 9 2 3 4 5
-    q.enqueue_front(10); // 10 9 2 3 4 5
-    q.display();
+    tasks.enqueue(1131, 1);
+    tasks.enqueue(3111, 3);
+    tasks.enqueue(2211, 2);
+    tasks.enqueue(3161, 3);
 
-    q.dequeue_rear(); // 10 9 2 3 4
-    q.display();
+    tasks.display();
 
+    cout << tasks.dequeue() << endl;
+    cout << tasks.dequeue() << endl;
 
+    tasks.enqueue(1535, 1);
+    tasks.enqueue(2815, 2);
+    tasks.enqueue(3845, 3);
+    tasks.enqueue(3145, 3);
+
+    tasks.display();
+
+    while(!tasks.is_empty())
+        cout << tasks.dequeue() << " ";
 
     return 0;
 }
