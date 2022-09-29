@@ -29,6 +29,10 @@ public:
 
         cout << node->data << " ";
     }
+
+    ~Node() {
+        cout << "Node : " << data << " \tdestructed\n";
+    }
 };
 
 
