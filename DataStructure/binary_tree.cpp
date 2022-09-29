@@ -1,15 +1,16 @@
 #include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
 class Node {
 public:
-    int data {};
+    string data {};
     Node* left {};
     Node* right {};
 
     Node() : left(nullptr), right(nullptr) {}
 
-    Node(int data) {
+    Node(string data) {
         this->data = data;
     }
 
@@ -22,44 +23,36 @@ public:
         if (node->left)
             print(node->left);
 
-        cout << node->data << " ";
 
         if (node->right)
             print(node->right);
+
+        cout << node->data << " ";
     }
 };
 
 
 int main() {
 
-    // Create Nodes
-    Node* root = new Node(1);
-    Node* node2 = new Node(2);
-    Node* node3 = new Node(3);
-    Node* node4 = new Node(4);
-    Node* node5 = new Node(5);
-    Node* node6 = new Node(6);
-    Node* node7 = new Node(7);
-    Node* node8 = new Node(8);
+    Node* plus = new Node("+");
+    Node* lop = new Node("2");
+    Node* rop = new Node("3");
 
-    // Link them!
-    root->left = node2;
-    root->right = node3;
+    plus->left = lop;
+    plus->right = rop;
 
-    node2->left = node4;
-    node2->right = node5;
+    Node* multi = new Node("*");
+    Node* op = new Node("4");
 
-    node5->right = node7;
+    multi->right = op;
+    multi->left = plus;
 
-    node3->right = node6;
-
-    node6->left = node8;
-
-    root->print(root); // 4 2 5 7 1 3 8 6
+    plus->print(multi);
 
     return 0;
+
 }
 
 /*
- * traversing a binary tree LVR
+    printing expression tree in post-order
  */
