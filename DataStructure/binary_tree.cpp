@@ -1,58 +1,23 @@
 #include <iostream>
 #include<bits/stdc++.h>
 using namespace std;
+class BinaryTree {
 
-class Node {
+private:
+    struct Node {
+        char data {};
+        Node* left {};
+        Node* right {};
+
+        Node(char data) : data(data){}
+    };
+    Node* root;
+
 public:
-    string data {};
-    Node* left {};
-    Node* right {};
-
-    Node() : left(nullptr), right(nullptr) {}
-
-    Node(string data) {
-        this->data = data;
-    }
-
-    void print(Node* node) { // LVR printing
-        if (!node->left && !node->right) {
-            cout << node->data << " ";
-            return;
-        }
-
-        if (node->left)
-            print(node->left);
-
-
-        if (node->right)
-            print(node->right);
-
-        cout << node->data << " ";
-    }
-
-    ~Node() {
-        cout << "Node : " << data << " \tdestructed\n";
-    }
+    BinaryTree(char root_value) : root(new Node(root_value)) {}
 };
 
-
 int main() {
-
-    Node* plus = new Node("+");
-    Node* lop = new Node("2");
-    Node* rop = new Node("3");
-
-    plus->left = lop;
-    plus->right = rop;
-
-    Node* multi = new Node("*");
-    Node* op = new Node("4");
-
-    multi->right = op;
-    multi->left = plus;
-
-    plus->print(multi);
-
     return 0;
 
 }
