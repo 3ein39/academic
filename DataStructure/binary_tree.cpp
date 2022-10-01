@@ -21,6 +21,17 @@ private:
         print_inorder(current->right);
     }
 
+    int get_max(Node* current) {
+        int max_val = 0;
+
+        if (!current)
+            return 0;
+
+        max_val = max(max_val, get_max(current->right));
+        max_val = max(max_val, get_max(current->left));
+        return max(max_val, current->data);
+    }
+
 public:
     BinaryTree(int root_value) : root(new Node(root_value)) {}
 
@@ -46,6 +57,10 @@ public:
         }
     }
 
+    int tree_max() {
+        return get_max(this->root);
+    }
+
     void print_inorder() {
         print_inorder(root);
         cout << "\n";
@@ -62,6 +77,8 @@ int main() {
 
     tree.print_inorder();
     // 7 4 8 2 5 9 1 3 10 6
+
+    cout << tree.tree_max();
     return 0;
 
 
