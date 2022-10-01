@@ -108,6 +108,21 @@ public:
     int total_leaf_nodes() {
         return get_total_leaf_nodes(this->root);
     }
+
+    bool is_exist(int val) {
+        return is_exist(this->root, val);
+    }
+
+    bool is_exist(Node* current,int val) {
+        bool exist = false;
+        if(!current)
+            return false;
+
+        exist = max(is_exist(current->left, val), is_exist(current->right, val));
+        if (val == current->data) exist = true;
+
+        return exist;
+    }
 };
 
 int main() {
@@ -121,7 +136,7 @@ int main() {
     tree.print_inorder();
     // 7 4 8 2 5 9 1 3 10 6
 
-    cout << tree.total_leaf_nodes() << endl;
+    cout << tree.is_exist(20) << endl;
     return 0;
 
 
