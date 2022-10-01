@@ -52,6 +52,17 @@ private:
 
         return count + 1;
     }
+
+    int get_total_leaf_nodes(Node* current) {
+        int count = 0;
+
+        if (!current) return 0;
+
+        count += get_total_leaf_nodes(current->left) + get_total_leaf_nodes(current->right);
+
+        if (!current->left && !current->right) return count + 1;
+        return count;
+    }
 public:
     BinaryTree(int root_value) : root(new Node(root_value)) {}
 
@@ -93,17 +104,24 @@ public:
     int total_nodes() {
         return get_total_nodes(this->root);
     }
+
+    int total_leaf_nodes() {
+        return get_total_leaf_nodes(this->root);
+    }
 };
 
 int main() {
 
     BinaryTree tree(1);
     tree.add( { 2, 4, 7 }, { 'L', 'L', 'L' });
+    tree.add( { 2, 4, 8 }, { 'L', 'L', 'R' });
+    tree.add( { 2, 5, 9 }, { 'L', 'R', 'R' });
+    tree.add( { 3, 6, 10 }, { 'R', 'R', 'L' });
 
     tree.print_inorder();
     // 7 4 8 2 5 9 1 3 10 6
 
-    cout << tree.total_nodes() << endl;
+    cout << tree.total_leaf_nodes() << endl;
     return 0;
 
 
