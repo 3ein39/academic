@@ -13,6 +13,16 @@ private:
     };
     Node* root;
 
+    void delete_node(Node* current) {
+        if (current) {
+            delete_node(current->left);
+            delete_node(current->right);
+            delete current;
+            current = nullptr;
+            cout << "\tNode Deleted\n";
+        }
+    }
+
     void print_inorder(Node* current) {
         if (!current)
             return;
@@ -143,6 +153,10 @@ public:
     bool is_perfect() {
         return is_perfect(this->root);
     }
+
+    ~BinaryTree() {
+        delete_node(root);
+    }
 };
 
 int main() {
@@ -150,9 +164,7 @@ int main() {
     BinaryTree tree(1);
     tree.add( { 2, 4, 7 }, { 'L', 'L', 'L' });
     tree.add( { 2, 4, 8 }, { 'L', 'L', 'R' });
-    tree.add( { 2, 5, 9 }, { 'L', 'R', 'R' });
-    tree.add( { 3, 6, 10 }, { 'R', 'R', 'L' });
-
+    
     tree.print_inorder();
     // 7 4 8 2 5 9 1 3 10 6
 
