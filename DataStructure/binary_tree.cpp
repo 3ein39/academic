@@ -63,6 +63,22 @@ private:
         if (!current->left && !current->right) return count + 1;
         return count;
     }
+
+    bool is_perfect(Node* current) {
+        bool exist = true;
+        if (!current)
+            return false;
+
+        is_perfect(current->left);
+        is_perfect(current->right);
+
+        int cnt = 0;
+        if (current->left) ++cnt;
+        if (current->right) ++cnt;
+
+        if (cnt != 0 && cnt != 2) exist = false;
+        return exist;
+    }
 public:
     BinaryTree(int root_value) : root(new Node(root_value)) {}
 
@@ -123,6 +139,10 @@ public:
 
         return exist;
     }
+
+    bool is_perfect() {
+        return is_perfect(this->root);
+    }
 };
 
 int main() {
@@ -136,7 +156,7 @@ int main() {
     tree.print_inorder();
     // 7 4 8 2 5 9 1 3 10 6
 
-    cout << tree.is_exist(20) << endl;
+    cout << tree.is_perfect() << endl;
     return 0;
 
 
