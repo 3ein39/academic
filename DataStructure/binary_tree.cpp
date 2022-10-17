@@ -5,11 +5,11 @@ class BinaryTree {
 
 private:
     struct Node {
-        int data {};
+        char data {};
         Node* left {};
         Node* right {};
 
-        Node(int data) : data(data){}
+        Node(char data) : data(data){}
     };
     Node* root;
 
@@ -31,16 +31,16 @@ private:
         print_inorder(current->right);
     }
 
-    int get_max(Node* current) {
-        int max_val = 0;
-
-        if (!current)
-            return 0;
-
-        max_val = max(max_val, get_max(current->right));
-        max_val = max(max_val, get_max(current->left));
-        return max(max_val, current->data);
-    }
+//    int get_max(Node* current) {
+//        int max_val = 0;
+//
+//        if (!current)
+//            return 0;
+//
+//        max_val = max(max_val, get_max(current->right));
+//        max_val = max(max_val, get_max(current->left));
+//        return max(max_val, current->data);
+//    }
 
     int get_height(Node* current) {
         int h = 0;
@@ -92,6 +92,27 @@ private:
 public:
     BinaryTree(int root_value) : root(new Node(root_value)) {}
 
+    BinaryTree(string postfix) {
+        stack<Node*> stack;
+        for (auto &el : postfix) {
+            if (isdigit(el)) {
+                Node* item = new Node(el);
+                stack.push(item);
+            }
+            else {
+                auto b = stack.top();
+                stack.pop();
+                auto a = stack.top();
+                stack.pop();
+
+                Node *op = new Node(el);
+                op->left = a, op->right = b;
+                stack.push(op);
+                this->root = op;
+            }
+        }
+    }
+
     void add(vector<int> values, vector<char> directions) {
         assert(values.size() == directions.size());
         Node* current = this->root;
@@ -114,9 +135,9 @@ public:
         }
     }
 
-    int tree_max() {
-        return get_max(this->root);
-    }
+//    int tree_max() {
+//        return get_max(this->root);
+//    }
 
     int tree_height() {
         return get_height(this->root) - 1;
@@ -161,14 +182,11 @@ public:
 
 int main() {
 
-    BinaryTree tree(1);
-    tree.add( { 2, 4, 7 }, { 'L', 'L', 'L' });
-    tree.add( { 2, 4, 8 }, { 'L', 'L', 'R' });
-    
-    tree.print_inorder();
+    BinaryTree root("51+2/");
+    root.print_inorder();
     // 7 4 8 2 5 9 1 3 10 6
 
-    cout << tree.is_perfect() << endl;
+//    cout << tree.is_perfect() << endl;
     return 0;
 
 
