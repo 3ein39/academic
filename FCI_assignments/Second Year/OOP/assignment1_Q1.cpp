@@ -9,42 +9,45 @@ struct BankInfo {
     string manager_name;
 };
 
-BankInfo* getBankInfo() {
-    BankInfo* item = new BankInfo();
+void getListOfBankInfo(BankInfo* bank, int sz = 3) { // size is predefined
+    for (int i = 0; i < sz; ++i) {
+        cout << "\n====== Bank Info Number " << i + 1 << " ======\n";
 
-    cout << "Enter Bank Data:\n";
-    cout << "\tName: ";
-    getline(cin, item->name);
+        cout << "Enter Bank Data:\n";
+        cout << "\tName: ";
+        cin >> ws; // handling some white spaces issues -related to linux ment- 
+        getline(cin, bank[i].name);
 
-    cout << "\tLocation: ";
-    getline(cin, item->location);
+        cout << "\tLocation: ";
+        getline(cin, bank[i].location);
 
-    cout << "\tManager Name: ";
-    getline(cin, item->manager_name);
+        cout << "\tManager Name: ";
+        getline(cin, bank[i].manager_name);
 
-    cout << "\tBank Id: ";
-    cin >> item->bank_id;
+        cout << "\tBank Id: ";
+        cin >> bank[i].bank_id;
 
-    cout << "\tEmployees Number: ";
-    cin >> item->emp_numbers;
-
-    return item;
+        cout << "\tEmployees Number: ";
+        cin >> bank[i].emp_numbers;
+    }
 }
 
-void displayBankInfo(BankInfo* info) {
-    cout << "===============\n";
+void displayListOfBank(BankInfo* bank, int sz = 3) {
+    for (int i = 0; i < sz; ++i) {
+    cout << "\n====== Bank info number " << i + 1 << " ======\n";
     cout << "Bank Information Data is:\n"
-        << "\tBank name: " << info->name << "\n"
-        << "\tLocation: " << info->location << "\n"
-        << "\tManager Name: " << info->manager_name << "\n"
-        << "\tNumber of Employees: " << info->emp_numbers << "\n"
-        << "\tBank Id: " << info->bank_id << "\n";
+         << "\tBank name: " << bank[i].name << "\n"
+         << "\tLocation: " << bank[i].location << "\n"
+         << "\tManager Name: " << bank[i].manager_name << "\n"
+         << "\tNumber of Employees: " << bank[i].emp_numbers << "\n"
+         << "\tBank Id: " << bank[i].bank_id << "\n";
+}
 }
 
 int main() {
-
-    BankInfo* info = getBankInfo();
-    displayBankInfo(info);
+    BankInfo banks[3];
+    getListOfBankInfo(banks);
+    displayListOfBank(banks);
 
     return 0;
 }
