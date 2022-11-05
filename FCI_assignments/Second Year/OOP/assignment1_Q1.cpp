@@ -15,7 +15,7 @@ void getListOfBankInfo(BankInfo* bank, int sz = 3) { // size is predefined
 
         cout << "Enter Bank Data:\n";
         cout << "\tName: ";
-        cin >> ws; // handling some white spaces issues -related to linux ment- 
+        cin >> ws; // handling some white spaces issues -related to linux ment-
         getline(cin, bank[i].name);
 
         cout << "\tLocation: ";
