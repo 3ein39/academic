@@ -23,18 +23,11 @@ private:
         }
     }
 
-    void print_inorder() {
-        Node *current = this->root;
+    void print_inorder(Node* current) {
         if (!current)
             return;
-        if (left) {
-            if (current->left && current->right) cout << "(";
-            print_inorder(current->left);
-        }
-
+        print_inorder(current->left);
         cout << current->data << " ";
-        
-        if (current->left && current->right) cout << ")";
         print_inorder(current->right);
     }
 
