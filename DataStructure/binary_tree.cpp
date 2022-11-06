@@ -1,11 +1,14 @@
 #include <iostream>
 #include<bits/stdc++.h>
 using namespace std;
+
+
+
 class BinaryTree {
 
 private:
     struct Node {
-        char data {};
+        int data {};
         Node* left {};
         Node* right {};
 
@@ -175,18 +178,34 @@ public:
         return is_perfect(this->root);
     }
 
+    void print_level_by_level() {
+        queue<Node*> queue;
+
+        queue.push(root);
+
+        while (!queue.empty()) {
+            Node* last = queue.front();
+            queue.pop();
+
+            if (last->left) queue.push(last->left);
+            if (last->right) queue.push(last->right);
+
+            cout << last->data << " ";
+        }
+    }
+
     ~BinaryTree() {
         delete_node(root);
     }
 };
 
 int main() {
-
-    BinaryTree root("51+2/");
-    root.print_inorder();
-    // 7 4 8 2 5 9 1 3 10 6
-
-//    cout << tree.is_perfect() << endl;
+    BinaryTree tree(1);
+    tree.add( { 2, 4, 7 }, { 'L', 'L', 'L' });
+    tree.add( { 2, 4, 8 }, { 'L', 'L', 'R' });
+    tree.add( { 2, 5, 9 }, { 'L', 'R', 'R' });
+    tree.add( { 3, 6, 10 }, { 'R', 'R', 'L' });
+    tree.print_level_by_level();
     return 0;
 
 
