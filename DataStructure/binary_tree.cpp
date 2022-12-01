@@ -182,15 +182,20 @@ public:
         queue<Node*> queue;
 
         queue.push(root);
-
+        int sz = 1;
         while (!queue.empty()) {
-            Node* last = queue.front();
-            queue.pop();
+            cout << "level " << sz << " nodes\n";
+            for (int it = 0; it < sz; ++it){
+                Node* last = queue.front();
+                queue.pop();
 
-            if (last->left) queue.push(last->left);
-            if (last->right) queue.push(last->right);
+                if (last->left) queue.push(last->left);
+                if (last->right) queue.push(last->right);
 
-            cout << last->data << " ";
+                cout << last->data << " ";
+            }
+            ++sz;
+            cout << endl;
         }
     }
 
