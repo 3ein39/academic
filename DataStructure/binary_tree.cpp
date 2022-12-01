@@ -199,6 +199,28 @@ public:
         }
     }
 
+    void recursive_level_order_traversal() {
+        int h = tree_height();
+
+        for (int i = 0; i <= h; ++i) {
+            cout << "\tlevel " << i << endl;
+            print_level_rec(root, i);
+            cout << endl;
+        }
+    }
+
+    void print_level_rec(Node* node, int level) {
+        if (!node) return;
+
+        if (level == 0)
+            cout << node->data << " ";
+        else {
+            print_level_rec(node->left, level - 1);
+            print_level_rec(node->right, level - 1);
+        }
+    }
+
+
     ~BinaryTree() {
         delete_node(root);
     }
@@ -210,7 +232,7 @@ int main() {
     tree.add( { 2, 4, 8 }, { 'L', 'L', 'R' });
     tree.add( { 2, 5, 9 }, { 'L', 'R', 'R' });
     tree.add( { 3, 6, 10 }, { 'R', 'R', 'L' });
-    tree.print_level_by_level();
+    tree.recursive_level_order_traversal();
     return 0;
 
 
