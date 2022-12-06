@@ -92,6 +92,21 @@ private:
         if (cnt != 0 && cnt != 2) exist = false;
         return exist;
     }
+
+    void print_preorder_complete_helper(Node* current) {
+        cout << current->data << " ";
+
+        if (current->left)
+            print_preorder_complete_helper(current->left);
+        else
+            cout << "null ";
+
+        if (current->right)
+            print_preorder_complete_helper(current->right);
+        else
+            cout << "null ";
+    }
+
 public:
     BinaryTree(int root_value) : root(new Node(root_value)) {}
 
@@ -220,6 +235,9 @@ public:
         }
     }
 
+    void print_preorder_complete() {
+        print_preorder_complete_helper(this->root);
+    }
 
     ~BinaryTree() {
         delete_node(root);
@@ -228,11 +246,9 @@ public:
 
 int main() {
     BinaryTree tree(1);
-    tree.add( { 2, 4, 7 }, { 'L', 'L', 'L' });
-    tree.add( { 2, 4, 8 }, { 'L', 'L', 'R' });
-    tree.add( { 2, 5, 9 }, { 'L', 'R', 'R' });
-    tree.add( { 3, 6, 10 }, { 'R', 'R', 'L' });
-    tree.recursive_level_order_traversal();
+    tree.add( { 2}, { 'L'});
+    tree.add( {3}, { 'R'});
+    tree.print_preorder_complete();
     return 0;
 
 
