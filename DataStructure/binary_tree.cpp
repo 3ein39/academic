@@ -274,7 +274,7 @@ public:
 int main() {
     BinaryTree tree(1);
     tree.add( { 3 }, { 'L'});
-    tree.add( { 2 y}, { 'R'});
+    tree.add( { 2 }, { 'R'});
     tree.print_preorder_complete();
 
     cout << tree.parenthesize_canonical(tree.root);
