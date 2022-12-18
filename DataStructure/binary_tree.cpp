@@ -14,7 +14,6 @@ private:
 
         Node(char data) : data(data){}
     };
-    Node* root;
 
     void delete_node(Node* current) {
         if (current) {
@@ -108,6 +107,7 @@ private:
     }
 
 public:
+    Node* root;
     BinaryTree(int root_value) : root(new Node(root_value)) {}
 
     BinaryTree(string postfix) {
