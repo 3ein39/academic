@@ -242,13 +242,43 @@ public:
     ~BinaryTree() {
         delete_node(root);
     }
+
+    string parenthesize_canonical(Node* cur) {
+        string rep = "(" + to_string(cur->data);
+
+        vector<string> v;
+
+        if (cur->left)
+            v.push_back(parenthesize_canonical(cur->left));
+        else
+            v.push_back("()");
+
+        if (cur->right)
+            v.push_back(parenthesize_canonical(cur->right));
+        else
+            v.push_back("()");
+
+        sort(v.begin(), v.end());
+
+        for (int i = 0; i < v.size(); ++i) {
+            rep += v[i];
+        }
+
+        rep += ")";
+
+        return rep;
+
+    }
 };
 
 int main() {
     BinaryTree tree(1);
-    tree.add( { 2}, { 'L'});
-    tree.add( {3}, { 'R'});
+    tree.add( { 3 }, { 'L'});
+    tree.add( { 2 y}, { 'R'});
     tree.print_preorder_complete();
+
+    cout << tree.parenthesize_canonical(tree.root);
+
     return 0;
 
 
