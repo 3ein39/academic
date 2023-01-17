@@ -34,6 +34,15 @@ public:
                 left = new BST(target);
         }
     }
+
+    int min_value() {
+        BST *node = this;
+
+        while (node && node->left)
+            node = node->left;
+
+        return node->val;
+    }
 };
 
 int main() {
@@ -42,5 +51,6 @@ int main() {
     root.insert(3);
     root.insert(4);
 
+    cout << root.min_value() << endl;
     return 0;
 }
