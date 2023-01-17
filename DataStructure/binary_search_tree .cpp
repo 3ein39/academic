@@ -59,21 +59,63 @@ public:
 
     // return max in a BST
     int get_max() {
-        BST* node = this;
+        BST *node = this;
 
         while (node && node->right)
-            node->right;
+            node = node->right;
 
         return node->val;
+    }
+    // utility: extracts next parent from back
+    BST* get_next(vector<BST*>& ancestors) {
+        if (ancestors.size() == 0)
+            return nullptr;
+
+        BST* node = ancestors.back();
+        ancestors.pop_back();
+
+        return node;
+    }
+
+    // you should always call it with root
+    pair<bool, int> get_successor(int target) {
+        vector<BST*> ancestors;
+
+        if (!find_chain(ancestors, target))
+            return {false, -1};
+
+        BST* child = get_next(ancestors);
+
+        if (child->val == this->get_max())
+            return {false, -1};
+
+        if (child->right)
+            return {true, child->right->min_value()};
+
+        BST* parent = get_next(ancestors);
+
+        while (parent && parent->right == child){
+            child = parent;
+            parent = get_next(ancestors);
+        }
+
+        if (parent)
+            return {true, parent->val};
+
+        return {false, -1};
     }
 };
 
 int main() {
-    BST root(1);
-    root.insert(2);
-    root.insert(3);
+    BST root(50);
     root.insert(4);
+    root.insert(3);
+    root.insert(2);
+    root.insert(1);
+    root.insert(60);
 
-    cout << root.min_value() << endl;
+
+    cout << root.get_successor(4).second << endl;
     return 0;
+
 }
