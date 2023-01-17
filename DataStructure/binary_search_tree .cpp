@@ -43,6 +43,19 @@ public:
 
         return node->val;
     }
+
+    // returns the chain of ancestors from node to target
+    bool find_chain(vector<BST*>& ancestors, int target) {
+        ancestors.push_back(this);
+
+        if (target == val)
+            return true;
+
+        if (target < val)
+            return left && left->find_chain(ancestors, target);
+
+        return right && right->find_chain(ancestors, target);
+    }
 };
 
 int main() {
