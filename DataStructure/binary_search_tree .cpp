@@ -56,6 +56,16 @@ public:
 
         return right && right->find_chain(ancestors, target);
     }
+
+    // return max in a BST
+    int get_max() {
+        BST* node = this;
+
+        while (node && node->right)
+            node->right;
+
+        return node->val;
+    }
 };
 
 int main() {
