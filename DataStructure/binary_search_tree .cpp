@@ -6,9 +6,10 @@ private:
     int val;
     BST* left;
     BST* right;
+    BST* parent;
 
 public:
-    BST(int val) : val(val), left(nullptr), right(nullptr) {};
+    BST(int val) : val(val), left(nullptr), right(nullptr), parent(nullptr) {};
 
     bool search(int target) {
         if (target == val)
@@ -24,14 +25,18 @@ public:
         if (target > val) {
             if (right)
                 right->insert(target);
-            else
+            else {
                 right = new BST(target);
+                right->parent = this;
+            }
         }
         else if (target < val) {
             if (left)
                 left->insert(target);
-            else
+            else {
                 left = new BST(target);
+                left->parent = this;
+            }
         }
     }
 
