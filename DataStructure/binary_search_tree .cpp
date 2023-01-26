@@ -109,6 +109,32 @@ public:
 
         return {false, -1};
     }
+
+    BST* get_node(int target) {
+        if (target == this->val)
+            return this;
+
+        if (target > this->val)
+            return this->right->get_node(target);
+        else if (target < this->val)
+            return this->left->get_node(target);
+    }
+
+    pair<bool, int> get_successor2(int target) {
+        BST* my_node = get_node(target);
+
+        if (my_node->right)
+            return {true, my_node->right->min_value()};
+
+        BST* par = my_node->parent;
+
+        while (parent->right == my_node) {
+            my_node = parent;
+            par = par->parent;
+        }
+
+        return {true, parent->val};
+    }
 };
 
 int main() {
