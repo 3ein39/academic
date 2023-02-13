@@ -25,6 +25,10 @@ public:
         return p >= size ? -1 : p;
     }
 
+    bool isempty() {
+        return (size == 0);
+    }
+
     // heap insertion using heapify method
     int parent(int node) {
         return node == 0 ? -1 : (node - 1) / 2;
