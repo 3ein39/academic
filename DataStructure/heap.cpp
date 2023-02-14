@@ -7,12 +7,6 @@ private:
     int* array{};
     int size {};
     int capacity {1000}; // as same as capacity in vector ... for simplicity
-public:
-    MinHeap() {
-        array = new int(capacity) {};
-        size = 0;
-    }
-
     int left(int node) {
         int p = 2 * node + 1;
 
@@ -23,10 +17,6 @@ public:
         int p = 2 * node + 2;
 
         return p >= size ? -1 : p;
-    }
-
-    bool isempty() {
-        return (size == 0);
     }
 
     // heap insertion using heapify method
@@ -42,6 +32,16 @@ public:
 
         swap(array[child_pos], array[parent_pos]);
         heapify_up(parent_pos);
+    }
+
+public:
+    MinHeap() {
+        array = new int(capacity) {};
+        size = 0;
+    }
+
+    bool isempty() {
+        return (size == 0);
     }
 
     void push(int key) {
