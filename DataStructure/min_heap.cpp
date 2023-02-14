@@ -96,3 +96,14 @@ public:
         array = nullptr;
     }
 };
+
+int main() {
+    vector<int> v {1,5,9,7,6,4,2,3,8};
+    MinHeap h1(v);
+
+    while(!h1.isempty()) {
+        cout << h1.top() << " ";
+        h1.pop();
+    }
+    // 1 2 3 4 5 6 7 8 9
+}
