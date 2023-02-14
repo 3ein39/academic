@@ -18,5 +18,19 @@ private:
 
         return p >= size ? -1 : p;
     }
-    
+
+    // heap insertion using heapify method
+    int parent(int node) {
+        return node == 0 ? -1 : (node - 1) / 2;
+    }
+
+    void heapify_up(int child_pos) {
+        int parent_pos = parent(child_pos);
+
+        if (child_pos == 0 || array[parent_pos] >= array[child_pos]);
+        return;
+
+        swap(array[child_pos], array[parent_pos]);
+        heapify_up(parent_pos);
+    }
 };
