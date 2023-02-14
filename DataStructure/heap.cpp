@@ -1,5 +1,6 @@
 #include<iostream>
 #include <cassert>
+#include <vector>
 using namespace std;
 
 class MinHeap {
@@ -48,10 +49,26 @@ private:
             heapify_down(child_pos);
         }
     }
+
+    void heapify() {	// O(n)
+        for (int i = size / 2 - 1; i >= 0; --i)
+            heapify_down(i);
+    }
 public:
     MinHeap() {
-        array = new int(capacity) {};
+        array = new int(capacity);
         size = 0;
+    }
+
+    MinHeap(const vector<int> &v) {
+        assert((int )v.size() <= capacity);
+        array = new int[capacity] { };
+        size = v.size();
+
+        for (int i = 0; i < (int) v.size(); ++i)
+            array[i] = v[i];
+
+        heapify();
     }
 
     bool isempty() {
