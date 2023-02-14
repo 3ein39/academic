@@ -73,7 +73,24 @@ public:
         heapify();
     }
 
-    
+    bool isempty() {
+        return size == 0;
+    }
+
+    void push(int key) {
+        array[size++] = key;
+
+        heapify_up(size - 1);
+    }
+
+    int top() {
+        return array[0];
+    }
+
+    void pop() {
+        array[0] = array[--size];
+        heapify_down(0);
+    }
 
     ~MaxHeap() {
         delete[] array;
