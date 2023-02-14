@@ -62,6 +62,19 @@ public:
         size = 0;
     }
 
+    MaxHeap(const vector<int>& v) {
+        array = new int[capacity] {};
+        size = v.size();
+
+        for (int i = 0; i < v.size(); ++i) {
+            array[i] = v[i];
+        }
+
+        heapify();
+    }
+
+    
+
     ~MaxHeap() {
         delete[] array;
         array = nullptr;
