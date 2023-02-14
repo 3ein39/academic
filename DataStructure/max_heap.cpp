@@ -97,3 +97,15 @@ public:
         array = nullptr;
     }
 };
+
+int main() {
+    vector<int> v{1, 5, 7, 6, 4, 2, 3, 8};
+    MaxHeap h1(v);
+    while (!h1.isempty()) {
+        cout << h1.top() << " ";
+        h1.pop();
+    }
+    // 8 7 6 5 4 3 2 1
+
+    return 0;
+}
