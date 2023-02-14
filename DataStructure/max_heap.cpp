@@ -55,4 +55,15 @@ private:
             heapify_down(i);
         }
     }
+
+public:
+    MaxHeap() {
+        array = new int(capacity);
+        size = 0;
+    }
+
+    ~MaxHeap() {
+        delete[] array;
+        array = nullptr;
+    }
 };
