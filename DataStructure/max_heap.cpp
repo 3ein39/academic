@@ -33,4 +33,26 @@ private:
         swap(array[child_pos], array[parent_pos]);
         heapify_up(parent_pos);
     }
+
+    void heapify_down(int parent_pos) {
+        int child_pos = left(parent_pos);
+        int right_child = right(parent_pos);
+
+        if (child_pos == -1) // no children
+            return;
+        // is right greater than left?
+        if (right_child != -1 && array[right_child] > array[child_pos])
+            child_pos = right_child;
+
+        if (array[parent_pos] < array[child_pos]) {
+            swap(array[parent_pos], array[child_pos]);
+            heapify_down(child_pos);
+        }
+    }
+
+    void heapify() {
+        for (int i = size / 2 - 1; i >= 0; --i) {
+            heapify_down(i);
+        }
+    }
 };
