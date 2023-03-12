@@ -21,4 +21,27 @@ private:
     int balance_factor() {
         return child_height(left) - child_height(right);
     }
+
+    AVLtree* right_rotation(AVLtree* Q) {
+        AVLtree* P = Q->left;
+        Q->left = P->right;
+        P->right = Q;
+
+        Q->update_height();
+        P->update_height();
+
+        return P;
+    }
+
+    AVLtree* left_rotation(AVLtree* P) {
+        AVLtree * Q = P->right;
+        P->right = Q->left;
+        Q->left = P;
+
+        P->update_height();
+        Q->update_height();
+
+        return Q;
+    }
+
 };
