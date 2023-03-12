@@ -44,4 +44,23 @@ private:
         return Q;
     }
 
+public:
+    // handling the 4 imbalance cases in one function
+    AVLtree* balance(AVLtree* node) {
+        if (node->balance_factor() == 2) {
+            if (node->left->balance_factor() == -1)
+                node->left = left_rotation(node->left);
+
+            node = right_rotation(node);
+        }
+        else if (node->balance_factor() == -2) {
+            if (node->right->balance_factor() == 1)
+                node->right = right_rotation(node->right);
+
+            node = left_rotation(node);
+        }
+
+        return node;
+    }
+
 };
