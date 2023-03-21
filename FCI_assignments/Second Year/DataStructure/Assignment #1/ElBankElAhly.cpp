@@ -66,6 +66,10 @@ public:
     bool isFull() {
         return added_elements == size;
     }
+
+    int numberOfCustomers() {
+        return added_elements;
+    }
 };
 
 int main() {
