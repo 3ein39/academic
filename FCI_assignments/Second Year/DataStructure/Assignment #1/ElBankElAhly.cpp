@@ -87,6 +87,8 @@ int main() {
         CustomerQueue.enqueue();
         CustomerQueue.display();
     }
+
+    cout << "Number of costumers : " << CustomerQueue.numberOfCustomers() << endl;
     assert(CustomerQueue.isFull());
 
     for (int i = 1; i <= 6; ++i) {
