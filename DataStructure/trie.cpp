@@ -11,6 +11,17 @@ public:
         // set the pointers to null
         ::memset(child, 0, sizeof(child));
     }
+
+    void insert(string str, int idx = 0) {
+        if (idx == str.size())
+            isLeaf = true;
+        else {
+            int cur = str[idx] - 'a';
+            if (child[cur] == 0)
+                child[cur] = new trie();
+            child[cur]->insert(str, idx + 1);
+        }
+    }
 };
 
 int main() {
