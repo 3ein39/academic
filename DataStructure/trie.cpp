@@ -22,6 +22,23 @@ public:
             child[cur]->insert(str, idx + 1);
         }
     }
+
+    bool word_exist(string str, int idx = 0) {
+        if (idx == str.size())
+            return isLeaf;  // there is a string marked here
+
+        int cur = str[idx] - 'a';
+        if (!child[cur])
+            return false;   // such path doessn't exist
+        return child[cur]->word_exist(str, idx + 1);
+    }
+
+    bool prefix_exist(string str, int idx = 0) {
+        if (idx == str.size())
+            return true;    // all subwords covered
+
+        int cur = str[idx] - 'a';
+    }
 };
 
 int main() {
