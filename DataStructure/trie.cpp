@@ -45,6 +45,22 @@ public:
         return child[cur]->word_exist(str, idx + 1);
     }
 
+
+    bool word_exist_iterative(string str) {
+        trie* node = this;
+
+        for (int i = 0; i < str.size(); ++i) {
+            int cur = str[i] - 'a';
+
+            if (!node->child[cur])
+                return false;
+
+            node = node->child[cur];
+        }
+
+        return node->isLeaf;
+    }
+
     bool prefix_exist(string str, int idx = 0) {
         if (idx == str.size())
             return true;    // all subwords covered
@@ -67,8 +83,8 @@ trie root;
 	root.insert_iterative("ab");
 	root.insert_iterative("bcd");
 
-	cout << root.word_exist("xyz") << "\n";
-	cout << root.word_exist("xy") << "\n";
+	cout << root.word_exist_iterative("xyz") << "\n";
+	cout << root.word_exist_iterative("xy") << "\n";
 	cout << root.prefix_exist("xy") << "\n";
     return 0;
 }
