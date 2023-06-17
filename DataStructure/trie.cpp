@@ -71,20 +71,30 @@ public:
 
         return child[cur]->prefix_exist(str, idx + 1);
     }
+
+    string first_word_prefix(const string& str) {
+        trie* node = this;
+
+        for (int i = 0; i < str.size(); ++i) {
+            int cur = str[i] - 'a';
+
+            if (!node->child[cur] || node->isLeaf)
+                return str.substr(0, i);
+            node = node->child[cur];
+        }
+
+        return str;
+    }
 };
 
 int main() {
 trie root;
 
-	root.insert_iterative("abcd");
 	root.insert_iterative("xyz");
-	root.insert_iterative("abf");
-	root.insert_iterative("xn");
-	root.insert_iterative("ab");
-	root.insert_iterative("bcd");
+	root.insert_iterative("xyzea");
+	root.insert_iterative("bc");
+	root.insert_iterative("a");
 
-	cout << root.word_exist_iterative("xyz") << "\n";
-	cout << root.word_exist_iterative("xy") << "\n";
-	cout << root.prefix_exist("xy") << "\n";
+    cout << root.first_word_prefix("xyzabc") << endl;
     return 0;
 }
