@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class trie {
+    class trie {
 private:
     static const int MAX_CHAR = 26;
     trie* child[MAX_CHAR]; // each array index represent an edge.
@@ -21,6 +21,18 @@ public:
                 child[cur] = new trie();
             child[cur]->insert(str, idx + 1);
         }
+    }
+
+    // insertion in iterative way
+    void insert_iterative(string str) {
+        trie* node = this;
+        for (int idx = 0; idx < str.size(); ++idx) {
+            int cur = str[idx] - 'a';
+            if (node->child[cur] == 0)
+                node->child[cur] = new trie();
+            node = node->child[cur];
+        }
+        node->isLeaf = true;
     }
 
     bool word_exist(string str, int idx = 0) {
@@ -46,6 +58,17 @@ public:
 };
 
 int main() {
+trie root;
 
+	root.insert_iterative("abcd");
+	root.insert_iterative("xyz");
+	root.insert_iterative("abf");
+	root.insert_iterative("xn");
+	root.insert_iterative("ab");
+	root.insert_iterative("bcd");
+
+	cout << root.word_exist("xyz") << "\n";
+	cout << root.word_exist("xy") << "\n";
+	cout << root.prefix_exist("xy") << "\n";
     return 0;
 }
