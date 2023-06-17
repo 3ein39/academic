@@ -78,8 +78,11 @@ public:
         for (int i = 0; i < str.size(); ++i) {
             int cur = str[i] - 'a';
 
-            if (!node->child[cur] || node->isLeaf)
+            if(node->isLeaf)
                 return str.substr(0, i);
+            if (!node->child[cur])
+                break;
+
             node = node->child[cur];
         }
 
