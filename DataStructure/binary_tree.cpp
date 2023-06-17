@@ -270,14 +270,18 @@ public:
 
     }
 };
-
+/*
+ * 11,LL) (7,LLL) (8,R)
+(5,) (4,L) (13,RL) (2,LLR) (1,RRR) (4,RR) ()
+(3,L) (4,R) ()
+ */
 int main() {
-    BinaryTree tree(1);
-    tree.add( { 3 }, { 'L'});
-    tree.add( { 2 }, { 'R'});
-    tree.print_preorder_complete();
+    BinaryTree tree(5);
+    tree.add( {11}, {'L', 'L'});
+    tree.add( { 7 }, {'L', 'L', 'L'});
+//    tree.print_preorder_complete();
 
-    cout << tree.parenthesize_canonical(tree.root);
+//    cout << tree.parenthesize_canonical(tree.root);
 
     return 0;
 
