@@ -38,6 +38,10 @@ public:
             return true;    // all subwords covered
 
         int cur = str[idx] - 'a';
+        if (!child[cur])
+            return false; // this path do not exist
+
+        return child[cur]->prefix_exist(str, idx + 1);
     }
 };
 
