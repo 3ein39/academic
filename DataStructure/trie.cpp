@@ -89,6 +89,14 @@ public:
 
         return str;
     }
+
+    void get_all_strings(vector<string> & res, string cur = "") {
+        if (isLeaf)
+            res.push_back(cur);
+
+        for (auto& [letter, ptr]: child)
+            ptr->get_all_strings(res, cur + char(letter + 'a'));
+    }
 };
 
 int main() {
@@ -99,6 +107,9 @@ trie root;
 	root.insert_iterative("bc");
 	root.insert_iterative("a");
 
-    cout << root.first_word_prefix("xyzabc") << endl;
+    vector<string> v;
+    root.get_all_strings(v);
+    for (auto& el : v)
+        cout << el << endl;
     return 0;
 }
