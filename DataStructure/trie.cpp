@@ -4,12 +4,13 @@ using namespace std;
     class trie {
 private:
     static const int MAX_CHAR = 26;
-    trie* child[MAX_CHAR]; // each array index represent an edge.
+//    trie* child[MAX_CHAR]; // each array index represent an edge.
+    // more memory effiecent implementation, but accessing becomes O(log n) due to AVL tree
+    map<int, trie*> child;
+    // we can use un orderd map for O(1), i.e. it uses hashing
     bool isLeaf {};
 public:
     trie() {
-        // set the pointers to null
-        ::memset(child, 0, sizeof(child));
     }
 
     void insert(string str, int idx = 0) {
@@ -17,7 +18,7 @@ public:
             isLeaf = true;
         else {
             int cur = str[idx] - 'a';
-            if (child[cur] == 0)
+            if (!child.count(cur))
                 child[cur] = new trie();
             child[cur]->insert(str, idx + 1);
         }
@@ -28,7 +29,7 @@ public:
         trie* node = this;
         for (int idx = 0; idx < str.size(); ++idx) {
             int cur = str[idx] - 'a';
-            if (node->child[cur] == 0)
+            if (!node->child.count(cur))
                 node->child[cur] = new trie();
             node = node->child[cur];
         }
@@ -40,7 +41,7 @@ public:
             return isLeaf;  // there is a string marked here
 
         int cur = str[idx] - 'a';
-        if (!child[cur])
+        if (!child.count(cur))
             return false;   // such path doessn't exist
         return child[cur]->word_exist(str, idx + 1);
     }
@@ -52,7 +53,7 @@ public:
         for (int i = 0; i < str.size(); ++i) {
             int cur = str[i] - 'a';
 
-            if (!node->child[cur])
+            if (!node->child.count(cur))
                 return false;
 
             node = node->child[cur];
@@ -66,7 +67,7 @@ public:
             return true;    // all subwords covered
 
         int cur = str[idx] - 'a';
-        if (!child[cur])
+        if (!child.count(cur))
             return false; // this path do not exist
 
         return child[cur]->prefix_exist(str, idx + 1);
@@ -80,7 +81,7 @@ public:
 
             if(node->isLeaf)
                 return str.substr(0, i);
-            if (!node->child[cur])
+            if (!node->child.count(cur))
                 break;
 
             node = node->child[cur];
