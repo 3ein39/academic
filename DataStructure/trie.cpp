@@ -116,6 +116,21 @@ public:
         }
         node->get_all_strings_with_pre(res, str);
     }
+
+    bool word_exist_with_one_change(string str) {
+        for (int i = 0; i < str.size(); ++i) {
+            char cur = str[i];
+            for (char chg = 'a'; chg <= 'z'; ++chg) {
+                if (chg == str[i])
+                    continue;
+                str[i] = chg;
+                if (word_exist(str))
+                    return true;
+                str[i] = cur;
+            }
+        }
+        return false;
+    }
 };
 
 int main() {
