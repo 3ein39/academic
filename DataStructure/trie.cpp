@@ -97,18 +97,41 @@ public:
         for (auto& [letter, ptr]: child)
             ptr->get_all_strings(res, cur + char(letter + 'a'));
     }
+
+        void get_all_strings_with_pre(vector<string> & res, string& pre, string cur = "") {
+            if (isLeaf)
+                res.push_back(pre + cur);
+
+            for (auto& [letter, ptr]: child)
+                ptr->get_all_strings_with_pre(res, pre,cur + char(letter + 'a'));
+        }
+
+    void auto_complete(string& str, vector<string>& res) {
+        int idx= 0;
+        trie* node = this;
+        // assume that given str exists
+        for ( idx = 0; idx < str.size(); ++idx) {
+            int cur = str[idx] - 'a';
+            node = node->child[cur];
+        }
+        node->get_all_strings_with_pre(res, str);
+    }
 };
 
 int main() {
 trie root;
 
-	root.insert_iterative("xyz");
-	root.insert_iterative("xyzea");
-	root.insert_iterative("bc");
-	root.insert_iterative("a");
+	root.insert_iterative("abcd");
+	root.insert_iterative("ab");
+	root.insert_iterative("abx");
+	root.insert_iterative("abyz");
+    root.insert_iterative("xyz");
+    root.insert_iterative("a");
+    root.insert_iterative("bcd");
 
     vector<string> v;
-    root.get_all_strings(v);
+    string res = "ab";
+    root.auto_complete(res, v);
     for (auto& el : v)
         cout << el << endl;
     return 0;
