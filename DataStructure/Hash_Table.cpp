@@ -60,12 +60,15 @@ struct PhoneEntry {
 class PhoneHashTable {
 private:
     int table_size;
+    int elements = 0;
+    double limit_load_factor;
     vector<vector<PhoneEntry>> table;
     // we can use others: e.g. list<PhoneEntry>
 public:
-    PhoneHashTable(int table_size) :
+    PhoneHashTable(int table_size, double limit_load_factor = 0.75) :
             table_size(table_size) {
         table.resize(table_size);
+        this->limit_load_factor = limit_load_factor;
     }
 
     bool get(PhoneEntry &phone) {
@@ -90,6 +93,23 @@ public:
             }
         }
         table[idx].push_back(phone);
+        ++elements;
+        if ((double)elements / table_size > limit_load_factor) rehashing();
+    }
+
+    void rehashing() {
+        elements = 0;
+        table_size = 2 * table_size;
+        auto old_table = table;
+
+        for (auto& hash: table)
+            hash.erase(hash.begin(), hash.end());
+
+        table.resize(table_size);
+        for (auto& hash : old_table) {
+            for (auto& entry : hash)
+                put(entry);
+        }
     }
 
     bool remove(PhoneEntry phone) {
@@ -99,6 +119,7 @@ public:
                 // Swap with last and remove last in O(1)
                 swap(table[idx][i], table[idx].back());
                 table[idx].pop_back();
+                --elements;
                 return true;
             }
         }
